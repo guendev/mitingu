@@ -33,6 +33,10 @@ const videoTrack = computed(() => {
   }
 })
 
+const audioTrack = computed(() => {
+  return agoraStore.mapRemoteUsers[props.uid]?.audioTrack
+})
+
 const userName = computed(() => {
   if(!agoraStore.mapRemoteUsers[props.uid]) {
     return userStore.user?.name
@@ -43,6 +47,9 @@ const userName = computed(() => {
 
 onMounted(() => nextTick(() => {
   videoTrack.value?.play(videoRef.value!)
+}))
+onMounted(() => nextTick(() => {
+  audioTrack.value?.play()
 }))
 
 const getUserDetail = async () => {
@@ -56,6 +63,11 @@ onMounted(() => nextTick(() => getUserDetail()))
 watch(videoTrack, (track: any) => {
   nextTick(() => {
     track?.play(videoRef.value!)
+  })
+})
+watch(audioTrack, (track: any) => {
+  nextTick(() => {
+    track?.play()
   })
 })
 </script>
