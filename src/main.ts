@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import './firebase'
 import './assets/tailwind.css'
 
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'

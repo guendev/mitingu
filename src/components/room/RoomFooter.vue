@@ -1,11 +1,13 @@
 <template>
-  <div id="room-footer" class="relative flex items-center justify-center">
-    <div class="float-group left-[20px]">
-      <h1 class="mb-0 text-[17px] text-gray-500">{{ time }} : 50025</h1>
+  <div id="room-footer" class="relative flex items-center md:justify-center">
+    <div class="float-group left-[20px] hidden md:block">
+      <h1 class="mb-0 text-[17px] text-gray-500">
+        {{ time }}<span class="hidden lg:inline"> : {{ roomStore.goal?.name || $route.params.id }}</span>
+      </h1>
     </div>
 
     <button
-      class="base-button"
+      class="base-button md:ml-0 ml-4"
       :class="[
         agoraStore.isEnableAudio
           ? 'bg-primary-50 text-primary-500'
@@ -84,12 +86,12 @@
       </template>
     </a-dropdown>
 
-    <button class="base-button ml-4 bg-primary-50 text-primary-500">
-      <i-ph-dots-three-outline-vertical-fill />
-    </button>
+<!--    <button class="base-button ml-4 bg-primary-50 text-primary-500">-->
+<!--      <i-ph-dots-three-outline-vertical-fill />-->
+<!--    </button>-->
 
     <button
-      class="ml-4 flex h-10 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white"
+      class="ml-4 flex h-9 md:h-10 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white"
       @click="outRoom"
     >
       <i-fluent-call-end-16-filled />
@@ -97,7 +99,7 @@
 
     <div class="float-group right-[20px] flex items-center text-gray-500">
       <button
-        class="flex items-center justify-center text-[18px] transition"
+        class="ml-4 md:ml-6 flex items-center justify-center text-[18px] transition"
         :class="[
           roomStore.sidebar === 'users' ? 'text-primary-500' : 'text-gray-500'
         ]"
@@ -106,7 +108,7 @@
         <i-majesticons-users />
       </button>
       <button
-        class="ml-6 flex items-center justify-center text-[18px]"
+        class="ml-4 md:ml-6 flex items-center justify-center text-[18px]"
         :class="[
           roomStore.sidebar === 'chat' ? 'text-primary-500' : 'text-gray-500'
         ]"
@@ -115,7 +117,7 @@
         <i-bxs-message-square-dots />
       </button>
       <button
-        class="ml-6 flex items-center justify-center text-[18px]"
+        class="ml-4 md:ml-6 flex items-center justify-center text-[18px]"
         :class="[
           roomStore.sidebar === 'settings'
             ? 'text-primary-500'
@@ -194,6 +196,6 @@ const searchResult = computed(() => {
 }
 
 .base-button {
-  @apply flex h-10 w-10 items-center justify-center rounded-full text-[18px] transition;
+  @apply flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full text-[18px] transition;
 }
 </style>

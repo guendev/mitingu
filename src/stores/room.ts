@@ -14,7 +14,7 @@ export const useRoomStore = defineStore({
 
     state: (): IRoomStore => ({
         goal: undefined,
-        sidebar: 'users',
+        sidebar: undefined,
         page: 'confirm',
         members: []
     }),

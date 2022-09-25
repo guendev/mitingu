@@ -1,13 +1,22 @@
 <template>
-  <div class="user-media">
-    <div class="w-full h-full bg-white rounded-lg overflow-hidden">
+  <div class="user-media relative">
+    <div class="w-full h-full bg-white rounded-lg overflow-hidden relative z-10">
       <div ref="videoRef" class="w-full h-full" />
     </div>
+
+    <div class="z-20 absolute bottom-0 left-0 flex items-center transform translate-x-4 -translate-y-4 text-white bg-[#03030385] text-[12px] px-3 rounded-2xl py-1">
+      <i-ri-user-4-fill />
+      <span>
+        {{ userName }}
+      </span>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts" setup>
 const agoraStore = useAgoraStore()
+const userStore = useUserStore()
 const axios = useAxios()
 
 const props = defineProps<{
@@ -21,6 +30,14 @@ const videoTrack = computed(() => {
     return agoraStore.localTracks.video
   } else {
     return agoraStore.mapRemoteUsers[props.uid].videoTrack
+  }
+})
+
+const userName = computed(() => {
+  if(!agoraStore.mapRemoteUsers[props.uid]) {
+    return userStore.user?.name
+  } else {
+    return agoraStore.mapRemoteUsers[props.uid].userData?.name
   }
 })
 
