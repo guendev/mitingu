@@ -5,6 +5,7 @@ import AgoraRTC, {
     ICameraVideoTrack,
     IMicrophoneAudioTrack, UID
 } from "agora-rtc-sdk-ng"
+import {UserDocument} from "@entities/user";
 
 interface IRoomStore {
     _client?: IAgoraRTCClient
@@ -12,7 +13,9 @@ interface IRoomStore {
         audio?: IMicrophoneAudioTrack
         video?: ICameraVideoTrack
     },
-    mapRemoteUsers: Record<UID, IAgoraRTCRemoteUser>
+    mapRemoteUsers: Record<UID, IAgoraRTCRemoteUser & {
+        userData?: UserDocument
+    }>
     //mapRemoteUsers: IAgoraRTCRemoteUser[]
 }
 

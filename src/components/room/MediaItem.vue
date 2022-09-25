@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 const agoraStore = useAgoraStore()
-// const userStore = useUserStore()
+const axios = useAxios()
 
 const props = defineProps<{
   uid: number
@@ -28,8 +28,11 @@ onMounted(() => nextTick(() => {
   videoTrack.value?.play(videoRef.value!)
 }))
 
-const getUserDetail = () => {
-  console.log(agoraStore.mapRemoteUsers)
+const getUserDetail = async () => {
+  const result: any = await axios.get('/smileeye//detailUser/' + props.uid)
+  if (agoraStore.mapRemoteUsers[props.uid]) {
+    agoraStore.mapRemoteUsers[props.uid].userData = result
+  }
 }
 onMounted(() => nextTick(() => getUserDetail()))
 
