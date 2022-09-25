@@ -8,6 +8,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AAvatar: typeof import('ant-design-vue/es')['Avatar']
+    AButton: typeof import('ant-design-vue/es')['Button']
+    ADropdown: typeof import('ant-design-vue/es')['Dropdown']
+    AMenu: typeof import('ant-design-vue/es')['Menu']
+    AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     GridItem: typeof import('vue3-grid-layout')['GridItem']
     GridLayout: typeof import('vue3-grid-layout')['GridLayout']
     IBxsMessageSquareDots: typeof import('~icons/bxs/message-square-dots')['default']
@@ -21,6 +25,8 @@ declare module '@vue/runtime-core' {
     IMaterialSymbolsAdminPanelSettings: typeof import('~icons/material-symbols/admin-panel-settings')['default']
     IMaterialSymbolsAndroidContacts: typeof import('~icons/material-symbols/android-contacts')['default']
     IMdiMicrophoneOff: typeof import('~icons/mdi/microphone-off')['default']
+    InviteMember: typeof import('./../src/components/room/InviteMember.vue')['default']
+    InviteMemberItem: typeof import('@components/room/InviteMember.vue')['default']
     IPhDotsThreeOutlineVerticalFill: typeof import('~icons/ph/dots-three-outline-vertical-fill')['default']
     ITypcnUserAdd: typeof import('~icons/typcn/user-add')['default']
     MasterLayout: typeof import('./../src/components/includes/MasterLayout.vue')['default']

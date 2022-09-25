@@ -17,6 +17,31 @@
 
 <script lang="ts" setup>
 const roomStore = useRoomStore()
+
+const axios = useAxios()
+const route = useRoute()
+
+const getMembers = async () => {
+  try {
+    roomStore.members = await axios.get(`/smileeye/list-member/goal_root_id=${route.params.id}`)
+  } catch (e) {
+    //
+  }
+}
+
+const checkRoomAsync = async () => {
+  try {
+    const result: any = await axios.get(`/smileeye/detail-goal/goal_id=${route.params.id}`)
+    if(result) {
+      roomStore.goal = result
+      await getMembers()
+    }
+  } catch (e) {
+    //
+  }
+}
+
+onMounted(() => nextTick(() => checkRoomAsync()))
 </script>
 
 <style scoped>
