@@ -6,7 +6,7 @@
     <button class="text-gray-500 mr-7 text-[20px]">
       <i-bx-video-recording />
     </button>
-    <a-avatar :src="userStore.user?.avatar" />
+    <current-user />
   </nav>
 </template>
 
