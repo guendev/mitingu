@@ -16,6 +16,10 @@ interface IRoomStore {
     mapRemoteUsers: Record<UID, IAgoraRTCRemoteUser & {
         userData?: UserDocument
     }>
+    volumes: {
+        id: number
+        level: number
+    }[]
     //mapRemoteUsers: IAgoraRTCRemoteUser[]
 }
 
@@ -24,7 +28,8 @@ export const useAgoraStore = defineStore({
 
     state: (): IRoomStore => ({
         localTracks: {},
-        mapRemoteUsers: {}
+        mapRemoteUsers: {},
+        volumes: []
     }),
 
     getters: {
@@ -65,6 +70,23 @@ export const useAgoraStore = defineStore({
 
 
         addPublished() {
+
+            const upsertTrack = (user: IAgoraRTCRemoteUser, mediaType: "audio" | "video") => {
+                if(!this.mapRemoteUsers[user.uid]) {
+                    this.mapRemoteUsers[user.uid] = user
+                } else {
+                    const xuser = Object.assign({}, toRaw(this.mapRemoteUsers[user.uid]))
+                    if(mediaType === "audio") {
+                        xuser.audioTrack = user.audioTrack
+                        xuser.hasAudio = user.hasAudio
+                    } else if (mediaType === "video") {
+                        xuser.videoTrack = user.videoTrack
+                        xuser.hasVideo = user.hasVideo
+                    }
+                    this.mapRemoteUsers[user.uid] = xuser
+                }
+            }
+
             this.client?.on("user-published", async (user: IAgoraRTCRemoteUser, mediaType: "audio" | "video") => {
                 console.log(`================================${user.uid} published ${mediaType}`)
                 await this.client?.subscribe(user, mediaType)
@@ -88,25 +110,37 @@ export const useAgoraStore = defineStore({
                 //     this.mapRemoteUsers.push(user)
                 // }
 
-                if(!this.mapRemoteUsers[user.uid]) {
-                    this.mapRemoteUsers[user.uid] = user
-                } else {
-                    const xuser = Object.assign({}, toRaw(this.mapRemoteUsers[user.uid]))
-                    if(mediaType === "audio") {
-                        xuser.audioTrack = user.audioTrack
-                        xuser.hasAudio = user.hasAudio
-                    } else if (mediaType === "video") {
-                        xuser.videoTrack = user.videoTrack
-                        xuser.hasVideo = user.hasVideo
-                    }
-                    this.mapRemoteUsers[user.uid] = xuser
-                }
+                upsertTrack(user, mediaType)
 
+            })
+
+            this.client?.on("user-unpublished", async (user: IAgoraRTCRemoteUser, mediaType: "audio" | "video") => {
+                console.log(`${user.uid} unpublished ${mediaType}`)
+                upsertTrack(user, mediaType)
+            })
+
+
+            this.client?.enableAudioVolumeIndicator()
+            this.client?.on("volume-indicator", (volumes: any) => {
+
+                this.volumes = volumes.map((volume: any) => ({
+                    id: Number(volume.uid),
+                    level: volume.level
+                }))
+
+            })
+
+            this.client?.on('user-left',(user: IAgoraRTCRemoteUser) => {
+                delete this.mapRemoteUsers[user.uid]
             })
         },
 
         registerEvent() {
             this.addPublished()
+        },
+
+        async leave() {
+            await this.client?.leave()
         }
     }
 })
