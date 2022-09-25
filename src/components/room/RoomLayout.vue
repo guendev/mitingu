@@ -27,9 +27,6 @@
         <slot :index="index"></slot>
       </grid-item>
     </grid-layout>
-
-<!--    <div class="w-[300px] h-full"></div>-->
-
   </div>
 </template>
 
@@ -43,10 +40,19 @@ const layout = ref<any[]>([])
 const options = reactive({
   isDraggable: false,
   isResizable: false,
-  responsive: true,
+  responsive: false,
   rowHeight: 0,
   margin: [0, 0],
 })
+
+// tính toán kích c
+const layoutRef = ref<HTMLElement>()
+const { width } = useElementSize(layoutRef)
+
+const calculateRowHeight = () => {
+  options.rowHeight = layoutRef.value!.clientHeight / 12
+}
+onMounted(() => nextTick(() => calculateRowHeight()))
 
 // tính toán bố cục
 const autoLayout = () => {
@@ -58,21 +64,40 @@ const autoLayout = () => {
     i: i.toString(),
   })
 
-  // layout gốc
-  const _primaryLayout = Array(props.count)
-      .fill('')
-      .map((_, i) => {
-        if (props.count === 1) {
-          return getItemConfig(i, 12, 12)
-        } else if (props.count === 2) {
-          return getItemConfig(i, 6, 12)
-          // 3-4
-        } else if (props.count <= 4) {
-          return getItemConfig(i, 6, 6)
-        }
+  let _primaryLayout
+  if (width.value >= 640) {
+    // layout gốc
+    _primaryLayout = Array(props.count)
+        .fill('')
+        .map((_, i) => {
+          if (props.count === 1) {
+            return getItemConfig(i, 12, 12)
+          } else if (props.count === 2) {
+            return getItemConfig(i, 6, 12)
+            // 3-4
+          } else if (props.count <= 4) {
+            return getItemConfig(i, 6, 6)
+          }
 
-        return getItemConfig(i, 4, 6)
-      })
+          return getItemConfig(i, 4, 6)
+        })
+  } else {
+    _primaryLayout = Array(props.count)
+        .fill('')
+        .map((_, i) => {
+          if (props.count === 1) {
+            return getItemConfig(i, 12, 12)
+          } else if (props.count === 2) {
+            return getItemConfig(i, 12, 6)
+            // 3-4
+          } else if (props.count <= 4) {
+            return getItemConfig(i, 6, 6)
+          }
+
+          return getItemConfig(i, 6, 6)
+        })
+  }
+
   // Tính xuống hangf
   for (let i = 0; i < _primaryLayout.length; i++) {
     if (i === props.active) {
@@ -88,13 +113,6 @@ const autoLayout = () => {
   layout.value = _primaryLayout
 }
 
-// tính toán kích c
-const layoutRef = ref<HTMLElement>()
-const calculateRowHeight = () => {
-  options.rowHeight = layoutRef.value!.clientHeight / 12
-}
-onMounted(() => nextTick(() => calculateRowHeight()))
-
 // khi nào thì show
 const ready = computed(() => !!options.rowHeight)
 
@@ -102,9 +120,7 @@ const ready = computed(() => !!options.rowHeight)
 const debouncedRebuild = useDebounceFn(() => {
   autoLayout()
   calculateRowHeight()
-}, 1000)
-
-const { width } = useElementSize(layoutRef)
+}, 500)
 
 watch(width, () => {
   if (layoutRef.value) {
