@@ -8,12 +8,34 @@
 <script lang='ts' setup>
 import { useLoadingIndicator } from '@nguyenshort/vue3-loading-indicator'
 
+const cookies = useCookies()
 const router = useRouter()
 const route = useRoute()
+
+const userStore = useUserStore()
+const axios = useAxios()
 // Init app
 // Rename from vueClientInit
 const vueClientInit = async  () => {
-  //
+  const params: any = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop: string) => searchParams.get(prop),
+  })
+
+  // Thay thế token bằng token trong query
+  if(params._token) {
+    cookies?.set('_token', params._token)
+  }
+
+  userStore.setToken(cookies?.get('_token'))
+
+  if (userStore._token) {
+    await userStore.getMe(axios)
+  }
+
+  if(!userStore.auth) {
+    userStore.logout()
+    cookies?.remove('_token')
+  }
 }
 await vueClientInit()
 

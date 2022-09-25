@@ -1,14 +1,22 @@
 <template>
-  <div style="height: 100vh; overflow-y: auto">
+  <div id="confirm" class="w-full h-full min-h-screen">
+    <div class="max-w-bootstrap mx-auto w-full h-full flex">
+      <div class="w-1/2 flex items-center justify-center">
+        <div class="text-gray-300">
 
-    <room-confirm v-if="roomStore.page === 'confirm'" />
-    <room-layout v-else-if="roomStore.page === 'room'" :count="10" />
-
+        </div>
+      </div>
+      <div class="w-1/2 h-full flex items-center justify-center">
+        <img width="600" src="/images/homepage-hero.jpeg" alt="" />
+      </div>
+    </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-const roomStore = useRoomStore()
-</script>
+<script lang="ts" setup></script>
 
-<style scoped></style>
+<style scoped>
+#confirm {
+  @apply flex justify-center items-center bg-[#101c37] ;
+}
+</style>

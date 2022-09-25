@@ -13,6 +13,7 @@ interface IRoomStore {
         video?: ICameraVideoTrack
     },
     mapRemoteUsers: Record<UID, IAgoraRTCRemoteUser>
+    //mapRemoteUsers: IAgoraRTCRemoteUser[]
 }
 
 export const useAgoraStore = defineStore({
@@ -65,17 +66,37 @@ export const useAgoraStore = defineStore({
                 console.log(`================================${user.uid} published ${mediaType}`)
                 await this.client?.subscribe(user, mediaType)
 
+                // const index = this.mapRemoteUsers.findIndex((e) => e.uid === Number(user.uid))
+
+                // if(index > -1) {
+                //
+                //     const remoteUser = Object.assign({}, this.mapRemoteUsers[index])
+                //
+                //     if(mediaType === "audio") {
+                //         remoteUser.audioTrack = user.audioTrack
+                //         remoteUser.hasAudio = user.hasAudio
+                //     } else if (mediaType === "video") {
+                //         remoteUser.videoTrack = user.videoTrack
+                //         remoteUser.hasVideo = user.hasVideo
+                //     }
+                //
+                //     this.mapRemoteUsers.splice(index, 1, remoteUser)
+                // } else {
+                //     this.mapRemoteUsers.push(user)
+                // }
+
                 if(!this.mapRemoteUsers[user.uid]) {
                     this.mapRemoteUsers[user.uid] = user
                 } else {
-                    // toRaw(this.mapRemoteUsers[user.uid])
+                    const xuser = Object.assign({}, toRaw(this.mapRemoteUsers[user.uid]))
                     if(mediaType === "audio") {
-                        this.mapRemoteUsers[user.uid].audioTrack = user.audioTrack
-                        this.mapRemoteUsers[user.uid].hasAudio = user.hasAudio
+                        xuser.audioTrack = user.audioTrack
+                        xuser.hasAudio = user.hasAudio
                     } else if (mediaType === "video") {
-                        this.mapRemoteUsers[user.uid].videoTrack = user.videoTrack
-                        this.mapRemoteUsers[user.uid].hasVideo = user.hasVideo
+                        xuser.videoTrack = user.videoTrack
+                        xuser.hasVideo = user.hasVideo
                     }
+                    this.mapRemoteUsers[user.uid] = xuser
                 }
 
             })

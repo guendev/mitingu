@@ -1,13 +1,7 @@
 <template>
   <div id="room-content">
-<!--    <div class="room-title">-->
-<!--      <div data-v-15da0977="">-->
-<!--        <h1 class="text-[20px] mb-0">50025</h1>-->
-<!--        <h3 class="text-[12px] text-gray-500 mb-0">Thu, 22 Sep 2022 06:23:31 GMT</h3>-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="mate-wrapper">
-      <room-layout :count="7" :active="-1">
+      <room-layout :count="usersID.length + 1" :active="-1">
         <template #default="{ index }">
           <media-item :index="index" />
         </template>
@@ -16,10 +10,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "RoomBody"
-}
+<script lang="ts" setup>
+import {UID} from "agora-rtc-sdk-ng";
+
+const agoraStore = useAgoraStore()
+const usersID = computed<UID[]>(() => Object.keys(agoraStore.mapRemoteUsers))
 </script>
 
 <style scoped>
