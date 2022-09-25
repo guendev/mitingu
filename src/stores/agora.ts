@@ -4,7 +4,7 @@ import AgoraRTC, {
     IAgoraRTCRemoteUser,
     ICameraVideoTrack,
     IMicrophoneAudioTrack, UID
-} from "agora-rtc-sdk-ng";
+} from "agora-rtc-sdk-ng"
 
 interface IRoomStore {
     _client?: IAgoraRTCClient
@@ -51,8 +51,8 @@ export const useAgoraStore = defineStore({
             }
         },
 
-        async join(chanel: string) {
-            await this.client?.join(import.meta.env.VITE_AGORA_API_KEY, chanel, null, Math.round(Math.random() * 1000000))
+        async join(chanel: string, uid: UID) {
+            await this.client?.join(import.meta.env.VITE_AGORA_API_KEY, chanel, null, uid)
 
             const tracks: any = Object.values(this.localTracks).filter((track) => track)
 

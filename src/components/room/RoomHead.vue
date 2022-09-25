@@ -10,14 +10,12 @@
     <button class="text-gray-500 mr-7 text-[20px]">
       <i-bx-video-recording />
     </button>
-    <a-avatar src="https://joeschmoe.io/api/v1/random" />
+    <a-avatar :src="userStore.user?.avatar" />
   </nav>
 </template>
 
-<script>
-export default {
-  name: "RoomHead"
-}
+<script lang="ts" setup>
+const userStore = useUserStore()
 </script>
 
 <style scoped>

@@ -8,23 +8,30 @@
 
 <script lang="ts" setup>
 const agoraStore = useAgoraStore()
+// const userStore = useUserStore()
+
 const props = defineProps<{
-  index: number
+  uid: number
 }>()
 
 const videoRef = ref<HTMLDivElement>()
 
 const videoTrack = computed(() => {
-  if(props.index === 0) {
+  if(!agoraStore.mapRemoteUsers[props.uid]) {
     return agoraStore.localTracks.video
   } else {
-    return agoraStore.mapRemoteUsers[props.index].videoTrack
+    return agoraStore.mapRemoteUsers[props.uid].videoTrack
   }
 })
 
 onMounted(() => nextTick(() => {
   videoTrack.value?.play(videoRef.value!)
 }))
+
+const getUserDetail = () => {
+  console.log(agoraStore.mapRemoteUsers)
+}
+onMounted(() => nextTick(() => getUserDetail()))
 
 </script>
 

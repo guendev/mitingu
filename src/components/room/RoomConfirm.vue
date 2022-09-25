@@ -68,6 +68,7 @@
 import AgoraRTC from "agora-rtc-sdk-ng"
 
 const agoraStore = useAgoraStore()
+const userStore = useUserStore()
 const roomStore = useRoomStore()
 
 const videoRef = ref<HTMLDivElement>()
@@ -92,7 +93,7 @@ const joinRoom = async () => {
   loading.value = true
   agoraStore.registerEvent()
   setTimeout(async () => {
-    await agoraStore.join(route.params.id as string)
+    await agoraStore.join(route.params.id as string, userStore.user!.id)
     loading.value = false
     roomStore.page = "room"
   }, 300)

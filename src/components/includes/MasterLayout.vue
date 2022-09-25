@@ -36,6 +36,12 @@ const vueClientInit = async  () => {
     userStore.logout()
     cookies?.remove('_token')
   }
+
+  if (route.name === 'room-id' && !userStore.auth) {
+    return router.push({
+      name: 'index'
+    })
+  }
 }
 await vueClientInit()
 
