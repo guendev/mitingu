@@ -63,6 +63,7 @@ const getUserDetail = async () => {
 onMounted(() => nextTick(() => getUserDetail()))
 
 watch(videoTrack, (track: any) => {
+  console.log('track', track)
   nextTick(() => {
     track?.play(videoRef.value!)
   })

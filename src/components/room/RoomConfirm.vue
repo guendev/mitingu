@@ -79,12 +79,22 @@ const initAgora = async () => {
     audio,
     video,
   }
-  agoraStore.localTracks.video?.play(videoRef.value!)
 }
 
 onMounted(() => {
   initAgora()
 })
+
+watch(
+  () => agoraStore.localTracks.video,
+  (val) => {
+    nextTick(() => {
+      if (videoRef.value) {
+        val?.play(videoRef.value)
+      }
+    })
+  }
+)
 
 const route = useRoute()
 const loading = ref(false)

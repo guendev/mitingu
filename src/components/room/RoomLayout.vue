@@ -47,7 +47,7 @@ const options = reactive({
 
 // tính toán kích c
 const layoutRef = ref<HTMLElement>()
-const { width } = useElementSize(layoutRef)
+const { width, height } = useElementSize(layoutRef)
 
 const calculateRowHeight = () => {
   options.rowHeight = layoutRef.value!.clientHeight / 12
@@ -65,7 +65,7 @@ const autoLayout = () => {
   })
 
   let _primaryLayout
-  if (width.value >= 640) {
+  if (width.value >= 768) {
     // layout gốc
     _primaryLayout = Array(props.count)
         .fill('')

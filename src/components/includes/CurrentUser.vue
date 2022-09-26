@@ -23,8 +23,10 @@
 const router = useRouter()
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
+const cookies = useCookies()
 
 const leaveRoom = async () => {
+  cookies?.remove('_token')
   await agoraStore.leave()
   userStore.logout()
   await router.push('/')
