@@ -12,7 +12,7 @@
     "apollo:codegen": "npx apollo codegen:generate --localSchemaFile=schema.graphql --target=typescript --tagName=gql --includes=./src/apollo/it/**/*.ts --globalTypesFile=src/apollo/__generated__/itTypes.ts",
     "apollo:download": "npx apollo client:download-schema --endpoint=https://it-be-v2.smileeye.edu.vn/graphql schema.graphql",
     "restart": "pm2 restart vue-mitting",
-    "stop": "pm2 stop vue-mitting"
+    "stop": "pm2 stop mitingu"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
