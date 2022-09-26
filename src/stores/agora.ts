@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import AgoraRTC, {
+import type {
     IAgoraRTCClient,
     IAgoraRTCRemoteUser,
     ICameraVideoTrack,
@@ -43,7 +43,7 @@ export const useAgoraStore = defineStore({
 
         async init() {
             if(!this._client) {
-                this._client = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' })
+                this._client = window.AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' })
             }
         },
 
