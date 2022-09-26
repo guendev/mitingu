@@ -65,7 +65,6 @@
 </template>
 
 <script lang="ts" setup>
-import AgoraRTC from "agora-rtc-sdk-ng"
 
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
@@ -75,7 +74,7 @@ const videoRef = ref<HTMLDivElement>()
 
 const initAgora = async () => {
   await agoraStore.init()
-  const [audio, video] = await AgoraRTC.createMicrophoneAndCameraTracks()
+  const [audio, video] = await window.AgoraRTC.createMicrophoneAndCameraTracks()
   agoraStore.localTracks = {
     audio,
     video,
