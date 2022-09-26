@@ -48,7 +48,7 @@ const userName = computed(() => {
 })
 
 onMounted(() => nextTick(() => {
-  videoTrack.value?.play(videoRef.value!)
+  videoTrack.value?.play(videoRef.value!, { fit: 'contain' })
 }))
 onMounted(() => nextTick(() => {
   audioTrack.value?.play()
