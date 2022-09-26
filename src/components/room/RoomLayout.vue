@@ -128,7 +128,8 @@ watch(width, () => {
   }
 })
 
-watch(() => [props.active, props.count], () => {
+watch(() => props.count, () => {
+  console.log('count', props.count)
   if (layoutRef.value) {
     debouncedRebuild()
   }

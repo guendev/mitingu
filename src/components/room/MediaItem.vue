@@ -25,16 +25,18 @@ const props = defineProps<{
 
 const videoRef = ref<HTMLDivElement>()
 
+// index === 0 => user gốc
 const videoTrack = computed(() => {
-  if(!agoraStore.mapRemoteUsers[props.uid]) {
+  if (props.uid === 0) {
     return agoraStore.localTracks.video
-  } else {
-    return agoraStore.mapRemoteUsers[props.uid].videoTrack
   }
+  return agoraStore.mapRemoteUsers[props.uid - 1]?.videoTrack
 })
 
 const audioTrack = computed(() => {
-  return agoraStore.mapRemoteUsers[props.uid]?.audioTrack
+  if (props.uid !== 0) {
+    return agoraStore.mapRemoteUsers[props.uid - 1]?.audioTrack
+  }
 })
 
 const userName = computed(() => {

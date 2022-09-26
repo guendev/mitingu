@@ -13,14 +13,16 @@ interface IRoomStore {
         audio?: IMicrophoneAudioTrack
         video?: ICameraVideoTrack
     },
-    mapRemoteUsers: Record<UID, IAgoraRTCRemoteUser & {
-        userData?: UserDocument
-    }>
+    // mapRemoteUsers: Record<UID, IAgoraRTCRemoteUser & {
+    //     userData?: UserDocument
+    // }>
     volumes: {
         id: number
         level: number
     }[]
-    //mapRemoteUsers: IAgoraRTCRemoteUser[]
+    mapRemoteUsers: (IAgoraRTCRemoteUser & {
+        userData?: UserDocument
+    })[]
 }
 
 export const useAgoraStore = defineStore({
@@ -28,7 +30,7 @@ export const useAgoraStore = defineStore({
 
     state: (): IRoomStore => ({
         localTracks: {},
-        mapRemoteUsers: {},
+        mapRemoteUsers: [],
         volumes: []
     }),
 
@@ -72,43 +74,44 @@ export const useAgoraStore = defineStore({
         addPublished() {
 
             const upsertTrack = (user: IAgoraRTCRemoteUser, mediaType: "audio" | "video") => {
-                if(!this.mapRemoteUsers[user.uid]) {
-                    this.mapRemoteUsers[user.uid] = user
-                } else {
-                    const xuser = Object.assign({}, toRaw(this.mapRemoteUsers[user.uid]))
+
+                const index = this.mapRemoteUsers.findIndex((e) => e.uid === Number(user.uid))
+
+                if(index > -1) {
+
+                    const remoteUser = Object.assign({}, this.mapRemoteUsers[index])
+
                     if(mediaType === "audio") {
-                        xuser.audioTrack = user.audioTrack
-                        xuser.hasAudio = user.hasAudio
+                        remoteUser.audioTrack = user.audioTrack
+                        remoteUser.hasAudio = user.hasAudio
                     } else if (mediaType === "video") {
-                        xuser.videoTrack = user.videoTrack
-                        xuser.hasVideo = user.hasVideo
+                        remoteUser.videoTrack = user.videoTrack
+                        remoteUser.hasVideo = user.hasVideo
                     }
-                    this.mapRemoteUsers[user.uid] = xuser
+
+                    this.mapRemoteUsers.splice(index, 1, remoteUser)
+                } else {
+                    this.mapRemoteUsers.push(user)
                 }
+
+                // if(!this.mapRemoteUsers[user.uid]) {
+                //     this.mapRemoteUsers[user.uid] = user
+                // } else {
+                //     const xuser = Object.assign({}, toRaw(this.mapRemoteUsers[user.uid]))
+                //     if(mediaType === "audio") {
+                //         xuser.audioTrack = user.audioTrack
+                //         xuser.hasAudio = user.hasAudio
+                //     } else if (mediaType === "video") {
+                //         xuser.videoTrack = user.videoTrack
+                //         xuser.hasVideo = user.hasVideo
+                //     }
+                //     this.mapRemoteUsers[user.uid] = xuser
+                // }
             }
 
             this.client?.on("user-published", async (user: IAgoraRTCRemoteUser, mediaType: "audio" | "video") => {
                 console.log(`================================${user.uid} published ${mediaType}`)
                 await this.client?.subscribe(user, mediaType)
-
-                // const index = this.mapRemoteUsers.findIndex((e) => e.uid === Number(user.uid))
-
-                // if(index > -1) {
-                //
-                //     const remoteUser = Object.assign({}, this.mapRemoteUsers[index])
-                //
-                //     if(mediaType === "audio") {
-                //         remoteUser.audioTrack = user.audioTrack
-                //         remoteUser.hasAudio = user.hasAudio
-                //     } else if (mediaType === "video") {
-                //         remoteUser.videoTrack = user.videoTrack
-                //         remoteUser.hasVideo = user.hasVideo
-                //     }
-                //
-                //     this.mapRemoteUsers.splice(index, 1, remoteUser)
-                // } else {
-                //     this.mapRemoteUsers.push(user)
-                // }
 
                 upsertTrack(user, mediaType)
 
@@ -131,7 +134,7 @@ export const useAgoraStore = defineStore({
             })
 
             this.client?.on('user-left',(user: IAgoraRTCRemoteUser) => {
-                delete this.mapRemoteUsers[user.uid]
+                this.mapRemoteUsers = this.mapRemoteUsers.filter((e) => e.uid !== Number(user.uid))
             })
         },
 

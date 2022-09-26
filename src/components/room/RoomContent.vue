@@ -6,7 +6,7 @@
     >
       <room-layout :count="usersID.length" :active="-1">
         <template #default="{ index }">
-          <media-item :uid="usersID[index]" :data-index="index" />
+          <media-item :uid="index" :data-index="index" />
         </template>
       </room-layout>
 
