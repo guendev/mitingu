@@ -47,7 +47,7 @@ const userName = computed(() => {
 })
 
 onMounted(() => nextTick(() => {
-  videoTrack.value?.play(videoRef.value!)
+  videoTrack.value?.play(videoRef.value!, { fit: 'contain' })
 }))
 
 onMounted(() => nextTick(() => {
@@ -65,7 +65,7 @@ onMounted(() => nextTick(() => getUserDetail()))
 watch(videoTrack, (track: any) => {
   console.log('track', track)
   nextTick(() => {
-    track?.play(videoRef.value!)
+    track?.play(videoRef.value!, { fit: 'contain' })
   })
 })
 
