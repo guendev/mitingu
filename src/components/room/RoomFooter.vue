@@ -135,6 +135,7 @@
 const router = useRouter()
 
 const roomStore = useRoomStore()
+const userStore = useUserStore()
 const agoraStore = useAgoraStore()
 
 const dayjs = useDayjs()
@@ -174,7 +175,10 @@ const inviteAll = async () => {
 
 const skipTime = ref(0)
 
-const notInRoom = computed(() => roomStore.members)
+const notInRoom = computed(
+    () => roomStore.members
+        .filter(member => Number(userStore.user?.id) !== Number(member.id) && agoraStore.mapRemoteUsers.findIndex((e) => Number(e.uid) === Number(member.id)) === -1)
+)
 const keyword = ref('')
 
 const searchResult = computed(() => {
