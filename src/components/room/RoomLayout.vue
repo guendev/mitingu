@@ -56,7 +56,7 @@ const { width, height } = useElementSize(layoutRef)
 const style = computed(() => {
   const style: CSSProperties = {}
   if (width.value && height.value) {
-    if (width.value > height.value * 1.5) {
+    if (width.value > height.value * 1.5 && props.count >= 3) {
       style.width = height.value * 1.6 + 'px'
     }
   }
