@@ -9,7 +9,7 @@
         v-if="ready"
         id="gridLayout"
         ref="gridRef"
-        class="w-full"
+        class="w-full mx-auto"
         :layout="layout"
         :style="style"
         :col-num="12"
@@ -56,8 +56,8 @@ const { width, height } = useElementSize(layoutRef)
 const style = computed(() => {
   const style: CSSProperties = {}
   if (width.value && height.value) {
-    if (width.value > height.value * 1.5 && props.count >= 3) {
-      style.width = height.value * 1.6 + 'px'
+    if (width.value > height.value * 1.5 && props.count >= 3 && props.count <= 4) {
+      style.width = height.value * 1.7 + 'px'
     }
   }
   return style
@@ -104,7 +104,9 @@ const autoLayout = () => {
           } else if (props.count === 2) {
             return getItemConfig(i, 12, 6)
             // 3-4
-          } else if (props.count <= 4) {
+          } else if (props.count === 3) {
+            return getItemConfig(i, 6, 6)
+          } else if (props.count == 4) {
             return getItemConfig(i, 6, 6)
           }
 
@@ -114,6 +116,7 @@ const autoLayout = () => {
 
   // Tính xuống hangf
   for (let i = 0; i < _primaryLayout.length; i++) {
+
     if (i === props.active) {
       _primaryLayout[i].y = 0
       _primaryLayout[i].h = 12

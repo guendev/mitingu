@@ -117,7 +117,7 @@
         <i-bxs-message-square-dots />
       </button>
       <button
-        class="ml-4 md:ml-6 flex items-center justify-center text-[18px]"
+        class="ml-4 md:ml-6 flex items-center justify-center text-[18px] hidden md:block"
         :class="[
           roomStore.sidebar === 'settings'
             ? 'text-primary-500'
@@ -196,6 +196,6 @@ const searchResult = computed(() => {
 }
 
 .base-button {
-  @apply flex h-9 w-9 md:h-10 md:w-10 items-center justify-center rounded-full text-[18px] transition;
+  @apply flex h-7 w-7 md:h-10 md:w-10 items-center justify-center rounded-full text-[18px] transition;
 }
 </style>

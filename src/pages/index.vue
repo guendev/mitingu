@@ -5,7 +5,7 @@
       <current-user />
     </div>
 
-    <div class="max-w-bootstrap mx-auto w-full h-full flex flex-col-reverse md:flex-row">
+    <div class="max-w-bootstrap mx-auto w-full h-full flex flex-col-reverse md:flex-row px-3 md:px-0">
       <div class="w-full md:w-1/2 flex items-center justify-center">
         <div class="text-gray-300">
 

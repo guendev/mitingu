@@ -1,12 +1,12 @@
 <template>
   <div id="confirm" class="w-full h-full">
-    <div class="max-w-bootstrap mx-auto w-full h-full flex">
-      <div class="w-1/2 flex items-center justify-center">
+    <div class="max-w-bootstrap mx-auto w-full h-full md:flex mt-40 md:mt-0 px-4 md:px-0">
+      <div class="md:w-1/2 flex items-center justify-center">
         <div class="text-gray-300">
           <h1 class="text-current mb-0 font-medium text-[25px]">
             Phòng học: {{ $route.params.id }}
           </h1>
-          <div class="w-[450px] h-[220px] relative">
+          <div class="w-full md:w-[450px] h-[220px] relative">
             <div
                 ref="videoRef"
                 class="w-full h-full bg-gray-500 rounded-lg overflow-hidden mt-3 relative z-10"
@@ -16,7 +16,7 @@
                 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-[18px] z-20"
             >Bạn đã tắt camera</h3>
           </div>
-          <div class="w-[400px]">
+          <div class="md:w-[400px]">
             <p class="mt-3 text-[11px] opacity-50">Việc làm gia cuộc gọi sẽ coi như bạn sẽ đồng ý với các điều khoản và chính sách của chúng tôi.</p>
 
             <div class="flex items-center">
@@ -57,7 +57,7 @@
 
         </div>
       </div>
-      <div class="w-1/2 h-full flex items-center justify-center">
+      <div class="w-1/2 h-full flex items-center justify-center hidden md:block">
         <img width="600" src="/images/homepage-hero.jpeg" alt="" />
       </div>
     </div>
