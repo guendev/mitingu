@@ -5,8 +5,8 @@
       <current-user />
     </div>
 
-    <div class="max-w-bootstrap mx-auto w-full h-full flex">
-      <div class="w-1/2 flex items-center justify-center">
+    <div class="max-w-bootstrap mx-auto w-full h-full flex flex-col-reverse md:flex-row">
+      <div class="w-full md:w-1/2 flex items-center justify-center">
         <div class="text-gray-300">
 
 
@@ -45,7 +45,7 @@
           <template v-else>
             <h3 class="text-[27px] text-gray-200">Tham gia một cuộc hội thoại</h3>
 
-            <div class="flex items-center">
+            <div class="md:flex items-center">
               <a-button type="danger" size='large' @click="newRoom">
                 <template #icon>
                   <i-bx-bxs-video-recording class='inline mr-2' />
@@ -56,7 +56,7 @@
               <a-input
                   v-model:value='roomID'
                   placeholder='Hoặc nhập ID phòng'
-                  class='ml-4'
+                  class='md:ml-4 mt-4 md:mt-0'
                   @keyup.enter='toRoom(roomID.toString())'
               >
                 <template #prefix>
@@ -68,7 +68,7 @@
 
         </div>
       </div>
-      <div class="w-1/2 h-full flex items-center justify-center">
+      <div class="w-full md:w-1/2 h-full flex items-center justify-center">
         <img width="600" src="/images/homepage-hero.jpeg" alt="" />
       </div>
     </div>

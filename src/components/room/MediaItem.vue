@@ -40,22 +40,22 @@ const audioTrack = computed(() => {
 })
 
 const userName = computed(() => {
-  if(!agoraStore.mapRemoteUsers[props.uid]) {
+  if (props.uid === 0) {
     return userStore.user?.name
-  } else {
-    return agoraStore.mapRemoteUsers[props.uid].userData?.name
   }
+  return agoraStore.mapRemoteUsers[props.uid - 1]?.userData?.name
 })
 
 onMounted(() => nextTick(() => {
-  videoTrack.value?.play(videoRef.value!, { fit: 'contain' })
+  videoTrack.value?.play(videoRef.value!)
 }))
+
 onMounted(() => nextTick(() => {
   audioTrack.value?.play()
 }))
 
 const getUserDetail = async () => {
-  const result: any = await axios.get('/smileeye//detailUser/' + props.uid)
+  const result: any = await axios.get('/smileeye/detailUser/' + props.uid)
   if (agoraStore.mapRemoteUsers[props.uid]) {
     agoraStore.mapRemoteUsers[props.uid].userData = result
   }
@@ -68,6 +68,7 @@ watch(videoTrack, (track: any) => {
     track?.play(videoRef.value!)
   })
 })
+
 watch(audioTrack, (track: any) => {
   nextTick(() => {
     track?.play()

@@ -7,9 +7,11 @@
 
     <grid-layout
         v-if="ready"
+        id="gridLayout"
         ref="gridRef"
         class="w-full"
         :layout="layout"
+        :style="style"
         :col-num="12"
         v-bind="options"
         :use-css-transforms="true"
@@ -31,6 +33,8 @@
 </template>
 
 <script lang="ts" setup>
+import { CSSProperties } from 'vue'
+
 const props = defineProps<{
   count: number
   active?: number
@@ -48,6 +52,16 @@ const options = reactive({
 // tính toán kích c
 const layoutRef = ref<HTMLElement>()
 const { width, height } = useElementSize(layoutRef)
+
+const style = computed(() => {
+  const style: CSSProperties = {}
+  if (width.value && height.value) {
+    if (width.value > height.value * 1.5) {
+      style.width = height.value * 1.6 + 'px'
+    }
+  }
+  return style
+})
 
 const calculateRowHeight = () => {
   options.rowHeight = layoutRef.value!.clientHeight / 12
