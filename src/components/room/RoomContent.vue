@@ -25,10 +25,57 @@
 import {UID} from "agora-rtc-sdk-ng";
 import MessagesTab from "@components/tabs/MessagesTab.vue";
 
+const route = useRoute()
+
 const agoraStore = useAgoraStore()
 const roomStore = useRoomStore()
 const userStore = useUserStore()
 const usersID = computed<UID[]>(() => [userStore.user!.id, ...Object.keys(agoraStore.mapRemoteUsers).map((key) => Number(key))])
+
+// đánh giấu lời mời
+const checkInvite = async () => {
+  // đánh giấu tất cả lời mời thuộc phòng hiện tại
+  const docRef = await dbGet(dbRef(getDatabase(), `invites/${userStore.user?.id}/${route.params.id}`))
+  // kiểm tra user có phải là primary user hay ko bằng cách kiểm tra from của lời mười gâần rất của room
+  if (docRef.exists()) {
+    // const invites: InviteDocument[] = Object.values<InviteDocument>(docRef.val())
+    //   .filter(invite => invite.from.id === userStore.user?.id)
+    // const lastInvite = invites.sort((a, b) => b.createdAt - a.createdAt)[0]
+
+    // User hiện tại là primary user
+    // if(lastInvite?.from?.id === userStore.user?.id) {
+    //   return
+    // }
+    // Đánh giấu tất cả các lời mời của mn trong phòng
+    await checkDisabled()
+  }
+}
+
+const checkDisabled = async (chanel = '') => {
+  await Promise.all(
+      roomStore.members.map(async member => {
+        const docRef = await dbGet(dbRef(getDatabase(), `invites/${member.id}/${route.params.id || chanel}`))
+        if (docRef.exists()) {
+          const invites2 = Object.values(docRef.val())
+          await Promise.all([
+            invites2.filter(e => !e.disabled).map(async (invite: any) => {
+              await dbSet(dbRef(getDatabase(), `invites/${member.id}/${route.params.id || chanel}/${invite.id}`), {
+                ...invite,
+                disabled: true
+              })
+            })
+          ])
+        }
+      })
+  )
+}
+
+onMounted(async () => {
+  if (roomStore.goal) {
+    await checkInvite()
+  }
+})
+
 </script>
 
 <style scoped>

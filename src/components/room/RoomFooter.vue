@@ -132,6 +132,9 @@
 </template>
 
 <script lang="ts" setup>
+import { v4 as uuidv4 } from 'uuid'
+
+const route = useRoute()
 const router = useRouter()
 
 const roomStore = useRoomStore()
@@ -167,7 +170,25 @@ const inviteAll = async () => {
 
   await Promise.all(
       notInRoom.value.map(async (member) => {
-        //
+        const uid = uuidv4()
+        await dbSet(dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),{
+          id: uid,
+          from: {
+            id: userStore.user?.id,
+            name: userStore.user?.name,
+            avatar: userStore.user?.avatar
+          },
+          to: {
+            id: member.id,
+            name: member.name
+          },
+          goal: {
+            id: route.params?.id,
+            name: roomStore.goal?.name
+          },
+          disabled: false,
+          createdAt: Date.now()
+        })
       })
   )
 }
