@@ -10,7 +10,6 @@
         id="gridLayout"
         ref="gridRef"
         class="w-full mx-auto"
-        :is-mirrored="true"
         :layout="layout"
         :style="style"
         :col-num="12"

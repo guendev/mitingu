@@ -42,10 +42,28 @@ const checkRoomAsync = async () => {
 }
 
 onMounted(() => nextTick(() => checkRoomAsync()))
+
+
+const { height } = useWindowSize()
+
+const color = ref('0px')
+
+
+const debouncedRebuild = useDebounceFn(() => {
+  color.value = height.value - 60 + 'px'
+}, 500)
+
+watch(height, () => {
+  debouncedRebuild()
+}, { immediate: true })
 </script>
 
 <style scoped>
 #room-body {
-  @apply flex h-[calc(100vh-60px)] flex-col p-[20px];
+  @apply flex flex-col p-[20px];
+}
+
+#room-body {
+  height: v-bind(color);
 }
 </style>
