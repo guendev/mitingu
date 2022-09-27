@@ -4,7 +4,7 @@
         class="mate-wrapper relative"
         :class="[roomStore.sidebar ? 'mate-wrapper--sidebar md:pr-[340px]' : '']"
     >
-      <room-layout :count="3" :active="-1">
+      <room-layout :count="usersID.length" :active="-1">
         <template #default="{ index }">
           <media-item :uid="index" :data-index="index" />
         </template>
@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts" setup>
-import {UID} from "agora-rtc-sdk-ng";
-import MessagesTab from "@components/tabs/MessagesTab.vue";
+import {UID} from "agora-rtc-sdk-ng"
+import MessagesTab from "@components/tabs/MessagesTab.vue"
 
 const route = useRoute()
 
