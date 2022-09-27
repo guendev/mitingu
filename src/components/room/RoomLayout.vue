@@ -56,7 +56,10 @@ const { width, height } = useElementSize(layoutRef)
 const style = computed(() => {
   const style: CSSProperties = {}
   if (width.value && height.value) {
-    if (width.value > height.value * 1.5 && props.count >= 3 && props.count <= 4) {
+    if(props.count === 1) {
+      style.maxWidth = '800px'
+      style.width = '100%'
+    } else if (width.value > height.value * 1.5 && props.count >= 3 && props.count <= 4) {
       style.width = height.value * 1.7 + 'px'
     }
   }
