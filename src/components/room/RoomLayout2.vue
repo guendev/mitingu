@@ -48,17 +48,12 @@ const itemStyle = computed(() => {
     return {}
   }
   if(count.value === 1) {
-    // if(containerWidth.value > containerHeight.value) {
-    //   return {
-    //     width: containerHeight.value + 'px',
-    //     height: containerHeight.value * 7 / 12 + 'px',
-    //   }
-    // } else {
-    //   return {
-    //     width: containerWidth.value + 'px',
-    //     height: containerWidth.value * 12 / 7 + 'px',
-    //   }
-    // }
+    if(containerWidth.value > containerHeight.value) {
+      return {
+        width: containerHeight.value * 12 / 7 + 'px',
+        height: containerHeight.value + 'px',
+      }
+    }
     return {
       width: containerWidth.value + 'px',
       height: containerHeight.value + 'px',
