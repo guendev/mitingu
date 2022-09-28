@@ -7,7 +7,7 @@
 
     <div
         ref="layoutRef"
-        class="dynamic-layout flex flex-wrap h-full justify-around items-center -m-2"
+        class="dynamic-layout flex flex-wrap h-full justify-center items-center -m-2"
         :class="['_' + count]"
     >
       <div
