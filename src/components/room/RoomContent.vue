@@ -6,7 +6,7 @@
     >
       <room-layout2 :items="users" :active="-1">
         <template #default="{ item }">
-          <media-item2 :user-data="item.userData" :video="item.videoTrack" :audio="item.audioTrack" />
+          <media-item2 :uid="item.uid" :user-data="item.userData" :video="item.videoTrack" :audio="item.audioTrack" />
         </template>
       </room-layout2>
 

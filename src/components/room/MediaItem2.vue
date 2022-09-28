@@ -16,6 +16,7 @@
 
 <script lang="ts" setup>
 import {UserDocument} from "@entities/user";
+import {UID} from "agora-rtc-sdk-ng";
 
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
@@ -26,6 +27,7 @@ interface MediaProtocol {
 }
 
 const props = defineProps<{
+  uid: UID
   userData?: UserDocument
   video?: MediaProtocol
   audio?: MediaProtocol
@@ -40,6 +42,14 @@ onMounted(() => nextTick(() => {
 const debouncedRebuild = useDebounceFn(() => nextTick(() => props.video?.play(videoRef.value!)), 300)
 
 watch(() => props.video, () => debouncedRebuild())
+
+const getUserDetail = async () => {
+  const index = agoraStore.mapRemoteUsers.findIndex(user => user.uid === props.uid)
+  if(index !== -1) {
+    agoraStore.mapRemoteUsers[index].userData = await axios.get('/smileeye/detailUser/' + props.uid)
+  }
+}
+onMounted(() => getUserDetail())
 
 </script>
 
