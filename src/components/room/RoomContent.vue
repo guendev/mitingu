@@ -4,11 +4,11 @@
         class="mate-wrapper relative"
         :class="[roomStore.sidebar ? 'mate-wrapper--sidebar md:pr-[340px]' : '']"
     >
-      <room-layout :count="usersID.length" :active="-1">
-        <template #default="{ index }">
-          <media-item :uid="index" :data-index="index" />
+      <room-layout2 :items="users" :active="-1">
+        <template #default="{ item }">
+          <media-item2 :user-data="item.userData" :video="item.videoTrack" :audio="item.audioTrack" />
         </template>
-      </room-layout>
+      </room-layout2>
 
       <div v-if="roomStore.sidebar" class="absolute right-0 w-full md:w-[325px] h-full top-0 bg-white rounded-lg p-4">
         <div class="w-full h-full relative">
@@ -31,6 +31,12 @@ const agoraStore = useAgoraStore()
 const roomStore = useRoomStore()
 const userStore = useUserStore()
 const usersID = computed<UID[]>(() => [userStore.user!.id, ...Object.keys(agoraStore.mapRemoteUsers).map((key) => Number(key))])
+const users = computed(() => [{
+  uid: userStore.user!.id,
+  userData: userStore.user,
+  videoTrack: agoraStore.localTracks.video,
+  audioTrack: agoraStore.localTracks.audio
+}, ...agoraStore.mapRemoteUsers])
 
 // đánh giấu lời mời
 const checkInvite = async () => {

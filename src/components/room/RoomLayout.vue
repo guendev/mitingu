@@ -60,7 +60,7 @@ const style = computed(() => {
       style.maxWidth = '800px'
       style.width = '100%'
     } else if (width.value > height.value * 1.5 && props.count >= 3 && props.count <= 4) {
-      style.width = height.value * 1.7 + 'px'
+      style.width = height.value * 1.5 + 'px'
     }
   }
   return style

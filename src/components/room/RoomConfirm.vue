@@ -6,15 +6,18 @@
           <h1 class="text-current mb-0 font-medium text-[25px]">
             Phòng học: {{ $route.params.id }}
           </h1>
-          <div class="w-full md:w-[450px] h-[220px] relative">
+          <div class="w-full h-full relative md:w-[450px] aspect-w-12 overflow-hidden aspect-h-7 relative mt-3">
             <div
                 ref="videoRef"
-                class="w-full h-full bg-gray-500 rounded-lg overflow-hidden mt-3 relative z-10"
+                class="w-full h-full bg-gray-500 rounded-lg overflow-hidden absolute z-10 top-0 left-0 transition"
+                :class="[agoraStore.isEnableVideo ? '' : 'opacity-0']"
             ></div>
-            <h3
-                v-if="!agoraStore.isEnableVideo"
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-[18px] z-20"
-            >Bạn đã tắt camera</h3>
+            <div class="w-full h-full bg-slate-900">
+              <h3
+                  v-if="!agoraStore.isEnableVideo"
+                  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-[18px] z-20"
+              >Bạn đã tắt camera</h3>
+            </div>
           </div>
           <div class="md:w-[400px]">
             <p class="mt-3 text-[11px] opacity-50">Việc làm gia cuộc gọi sẽ coi như bạn sẽ đồng ý với các điều khoản và chính sách của chúng tôi.</p>
