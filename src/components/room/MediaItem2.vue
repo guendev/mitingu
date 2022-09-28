@@ -1,7 +1,17 @@
 <template>
   <div class="user-media relative w-full h-full">
-    <div class="w-full h-full bg-white rounded-lg overflow-hidden relative z-10">
+    <div
+        class="w-full h-full rounded-lg overflow-hidden relative z-10 transition"
+        :class="[!hasVideo ? 'opacity-0 bg-gray-400' : 'bg-white']"
+    >
       <div ref="videoRef" class="w-full h-full" />
+    </div>
+
+    <div
+        class="z-20 absolute w-[100px] h-[100px] bg-gray-300 top-1/2 left-1/2 rounded-full overflow-hidden transform -translate-x-1/2 -translate-y-1/2 transition"
+        :class="[hasVideo ? 'opacity-0 scale-75' : '']"
+    >
+      <img class="w-full h-full object-cover" alt="" :src="_userDocument?.avatar" />
     </div>
 
     <div class="z-20 absolute bottom-0 left-0 flex items-center transform translate-x-4 -translate-y-4 text-white bg-[#03030385] text-[12px] px-3 rounded-2xl py-1">
@@ -31,6 +41,7 @@ const props = defineProps<{
   userData?: UserDocument
   video?: MediaProtocol
   audio?: MediaProtocol
+  hasVideo?: boolean
 }>()
 
 const _userDocument = ref<UserDocument|undefined>()
@@ -51,6 +62,8 @@ const getUserDetail = async () => {
     const result: any = await axios.get('/smileeye/detailUser/' + props.uid)
     agoraStore.mapRemoteUsers[index].userData = result
     _userDocument.value = result
+  } else {
+    _userDocument.value = userStore.user as any
   }
 }
 onMounted(() => getUserDetail())
