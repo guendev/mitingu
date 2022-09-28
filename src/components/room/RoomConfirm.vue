@@ -43,16 +43,21 @@
               </button>
 
 
-              <button
-                  class="h-10 px-5 font-semibold rounded-full bg-primary-500 flex items-center justify-center text-[12px] text-white ml-4"
+              <a-button
+                  type="primary"
+                  class="ml-4 !rounded-full"
+                  :loading="loading"
                   @click="joinRoom"
               >
                 Tham Gia
-              </button>
+              </a-button>
 
-              <button class="h-10 px-5 font-semibold rounded-full bg-rose-500 flex items-center justify-center text-[12px] text-white ml-4">
+              <a-button
+                  type="danger"
+                  class="!rounded-full ml-4"
+              >
                 Huỷ Bỏ
-              </button>
+              </a-button>
 
             </div>
 

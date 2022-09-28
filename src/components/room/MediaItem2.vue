@@ -55,6 +55,11 @@ const getUserDetail = async () => {
 }
 onMounted(() => getUserDetail())
 
+onMounted(() => nextTick(() => {
+  props.audio?.play()
+}))
+watch(() => props.audio, () => props.audio?.play())
+
 </script>
 
 <style></style>
