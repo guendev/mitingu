@@ -10,7 +10,7 @@
         <i-material-symbols-close />
       </button>
     </div>
-    <div class="relative flex-full overflow-y-auto" id="chat-tab">
+    <div class="relative flex-full overflow-y-auto scrollbar-hide" id="chat-tab" ref="listRef">
 
       <message-item
           v-for='message in messages'
@@ -87,6 +87,24 @@ const submit = async () => {
   loading.value = false
 
 }
+
+const listRef = ref<HTMLDivElement>()
+const audio = new Audio('/mp3/message-notification-sfx.mp3');
+const count = ref(0)
+
+watch(rawMessage, () => {
+  nextTick(() => {
+    if (listRef.value) {
+      listRef.value.scrollTop = listRef.value.scrollHeight
+
+      if(count.value > 0) {
+        audio.play()
+      }
+      count.value++
+
+    }
+  })
+})
 </script>
 
 <style scoped>
