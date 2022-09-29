@@ -63,11 +63,8 @@ export const useAgoraStore = defineStore({
 
         async join(chanel: string, uid: UID) {
             await this.client?.join(import.meta.env.VITE_AGORA_API_KEY, chanel, null, uid)
-
-            const tracks: any = Object.values(this.localTracks).filter((track) => track)
-
+            const tracks: any = Object.values(this.localTracks).filter((track) => track).map((track) => toRaw(track))
             await this.client?.publish(tracks)
-
         },
 
 
