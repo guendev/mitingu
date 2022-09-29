@@ -38,13 +38,12 @@ const route = useRoute()
 const agoraStore = useAgoraStore()
 const roomStore = useRoomStore()
 const userStore = useUserStore()
-const usersID = computed<UID[]>(() => [userStore.user!.id, ...Object.keys(agoraStore.mapRemoteUsers).map((key) => Number(key))])
-const users = computed(() => [{
+const users = computed(() => [...agoraStore.mapRemoteUsers, {
   uid: userStore.user!.id,
   userData: userStore.user,
   videoTrack: agoraStore.localTracks.video,
   audioTrack: agoraStore.localTracks.audio
-}, ...agoraStore.mapRemoteUsers])
+}])
 
 // đánh giấu lời mời
 const checkInvite = async () => {
