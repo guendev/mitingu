@@ -1,7 +1,7 @@
 <template>
   <div
       ref="containerRef"
-      class="grid-container w-full h-full overflow-y-auto scrollbar-hide"
+      class="grid-container w-full h-full overflow-y-auto scrollbar-hide relative z-10"
       :class="['_' + count]"
   >
 

@@ -34,6 +34,7 @@ const axios = useAxios()
 
 interface MediaProtocol {
   play: (element?: HTMLElement) => void
+  stop: () => void
 }
 
 const props = defineProps<{
@@ -79,6 +80,10 @@ const debouncedAudio = useDebounceFn(() => nextTick(() => {
 onMounted(() => nextTick(debouncedAudio))
 watch(() => props.audio, debouncedAudio)
 
+onUnmounted(() => {
+  props.video?.stop()
+  props.audio?.stop()
+})
 </script>
 
 <style></style>

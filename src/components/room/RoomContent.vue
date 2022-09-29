@@ -18,7 +18,7 @@
         </template>
       </room-layout2>
 
-      <div v-if="roomStore.sidebar" class="absolute right-0 w-full md:w-[325px] h-full top-0 bg-white rounded-lg p-4">
+      <div v-if="roomStore.sidebar" class="absolute right-0 w-full md:w-[325px] h-full top-0 bg-white rounded-lg p-4 z-20">
         <div class="w-full h-full relative">
           <messages-tab v-if="roomStore.sidebar === 'chat' " />
           <members-tab v-else-if="roomStore.sidebar === 'users'" />
