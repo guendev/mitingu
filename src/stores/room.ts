@@ -27,6 +27,13 @@ export const useRoomStore = defineStore({
     actions: {
         toogleTab(tab: 'users' | 'chat' | 'settings') {
             this.sidebar = tab === this.sidebar ? undefined : tab
+        },
+
+        async reset() {
+            this.goal = undefined
+            this.members = []
+            this.sidebar = undefined
+            this.page = 'confirm'
         }
     }
 })

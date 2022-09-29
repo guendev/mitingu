@@ -42,6 +42,13 @@ export const useAgoraStore = defineStore({
 
 
     actions: {
+        async reset() {
+            this.mapRemoteUsers = []
+            this.volumes = []
+            this.localTracks.video?.stop()
+            this.localTracks.audio?.stop()
+            this.localTracks = {}
+        },
 
         async init() {
             if(!this._client) {

@@ -13,6 +13,8 @@ const router = useRouter()
 const route = useRoute()
 
 const userStore = useUserStore()
+const roomStore = useRoomStore()
+const agoraStore = useAgoraStore()
 const axios = useAxios()
 // Init app
 // Rename from vueClientInit
@@ -38,10 +40,17 @@ const vueClientInit = async  () => {
   }
 
   router.beforeEach(async (to, from, next) => {
-    if (to.name === 'room-id' && !userStore.auth) {
-      return next({
-        name: 'index'
-      })
+    console.log('Navigator to:', to.fullPath)
+    if (to.name === 'room-id') {
+      if(!userStore.auth) {
+        return next({
+          name: 'index'
+        })
+      }
+
+      // reset lại store
+      await agoraStore.reset()
+      await roomStore.reset()
     }
 
     next()
