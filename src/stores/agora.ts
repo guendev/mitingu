@@ -86,7 +86,7 @@ export const useAgoraStore = defineStore({
                         remoteUser.hasVideo = user.hasVideo
                     }
 
-                    // this.mapRemoteUsers[index] = user
+                    this.mapRemoteUsers[index] = remoteUser
                 } else {
                     this.mapRemoteUsers.push(user)
                 }

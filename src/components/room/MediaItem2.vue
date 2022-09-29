@@ -1,10 +1,12 @@
 <template>
   <div class="user-media relative w-full h-full">
     <div
-        class="w-full h-full rounded-lg overflow-hidden relative z-10 transition"
+        class="w-full h-full rounded-lg overflow-hidden relative z-10 transition flex items-center"
         :class="[!hasVideo ? 'opacity-0 bg-gray-400' : 'bg-white']"
     >
-      <div ref="videoRef" class="w-full h-full" />
+      <div class="relative w-full aspect-w-12 aspect-h-7">
+        <div ref="videoRef" class="w-full h-full" />
+      </div>
     </div>
 
     <div
@@ -48,12 +50,10 @@ const _userDocument = ref<UserDocument|undefined>()
 const videoRef = ref<HTMLDivElement>()
 
 onMounted(() => nextTick(() => {
-  props.video?.play?.(videoRef.value!, {
-    fit: 'contain'
-  })
+  props.video?.play?.(videoRef.value!)
 }))
 
-const debouncedRebuild = useDebounceFn(() => nextTick(() => props.video?.play?.(videoRef.value!, { fit: 'contain' })), 300)
+const debouncedRebuild = useDebounceFn(() => nextTick(() => props.video?.play?.(videoRef.value!)), 300)
 
 watch(() => props.video, () => debouncedRebuild())
 

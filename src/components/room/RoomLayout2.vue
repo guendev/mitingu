@@ -44,6 +44,8 @@ const containerRef = ref<HTMLDivElement>()
 const { width: containerWidth, height: containerHeight } = useElementSize(containerRef)
 
 const itemStyle = computed(() => {
+
+
   if(!containerHeight.value || !containerWidth.value) {
     return {}
   }
@@ -72,6 +74,15 @@ const itemStyle = computed(() => {
       }
     }
   } else {
+
+    if(containerWidth.value <= 640) {
+      const _sizeBase = containerWidth.value / 2
+      return {
+        width: _sizeBase + 'px',
+        height: _sizeBase + 'px'
+      }
+    }
+
     //  chia 4 theo tỉ lệ 7/12
     if(containerWidth.value > containerHeight.value) {
       const _sizeBase = containerHeight.value / 2
