@@ -113,7 +113,7 @@ const joinRoom = async () => {
     await agoraStore.join(route.params.id as string, userStore.user!.id)
     loading.value = false
     roomStore.page = "room"
-  }, 300)
+  }, 500)
 }
 
 </script>

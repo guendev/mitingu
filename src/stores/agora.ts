@@ -86,24 +86,10 @@ export const useAgoraStore = defineStore({
                         remoteUser.hasVideo = user.hasVideo
                     }
 
-                    this.mapRemoteUsers.splice(index, 1, remoteUser)
+                    // this.mapRemoteUsers[index] = user
                 } else {
                     this.mapRemoteUsers.push(user)
                 }
-
-                // if(!this.mapRemoteUsers[user.uid]) {
-                //     this.mapRemoteUsers[user.uid] = user
-                // } else {
-                //     const xuser = Object.assign({}, toRaw(this.mapRemoteUsers[user.uid]))
-                //     if(mediaType === "audio") {
-                //         xuser.audioTrack = user.audioTrack
-                //         xuser.hasAudio = user.hasAudio
-                //     } else if (mediaType === "video") {
-                //         xuser.videoTrack = user.videoTrack
-                //         xuser.hasVideo = user.hasVideo
-                //     }
-                //     this.mapRemoteUsers[user.uid] = xuser
-                // }
             }
 
             this.client?.on("user-published", async (user: IAgoraRTCRemoteUser, mediaType: "audio" | "video") => {

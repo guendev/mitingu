@@ -28,22 +28,17 @@
 
 <script lang="ts" setup>
 import {UserDocument} from "@entities/user";
-import {UID} from "agora-rtc-sdk-ng";
+import {IRemoteAudioTrack, IRemoteVideoTrack, UID} from "agora-rtc-sdk-ng";
 
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
 const axios = useAxios()
 
-interface MediaProtocol {
-  play: (element?: HTMLElement) => void
-  stop: () => void
-}
-
 const props = defineProps<{
   uid: UID
   userData?: UserDocument
-  video?: MediaProtocol
-  audio?: MediaProtocol
+  video?: Partial<IRemoteVideoTrack>
+  audio?: Partial<IRemoteAudioTrack>
   hasVideo?: boolean
   hasAudio?: boolean
 }>()
@@ -53,10 +48,12 @@ const _userDocument = ref<UserDocument|undefined>()
 const videoRef = ref<HTMLDivElement>()
 
 onMounted(() => nextTick(() => {
-  props.video?.play(videoRef.value!)
+  props.video?.play?.(videoRef.value!, {
+    fit: 'contain'
+  })
 }))
 
-const debouncedRebuild = useDebounceFn(() => nextTick(() => props.video?.play(videoRef.value!)), 300)
+const debouncedRebuild = useDebounceFn(() => nextTick(() => props.video?.play?.(videoRef.value!, { fit: 'contain' })), 300)
 
 watch(() => props.video, () => debouncedRebuild())
 
@@ -73,9 +70,8 @@ const getUserDetail = async () => {
 onMounted(() => getUserDetail())
 
 const debouncedAudio = useDebounceFn(() => nextTick(() => {
-  console.log('debouncedAudio')
   if (props.uid !== userStore.user?.id) {
-    props.video?.play(videoRef.value!)
+    props.audio?.play?.()
   }
 }), 300)
 
@@ -83,8 +79,8 @@ onMounted(() => nextTick(debouncedAudio))
 watch(() => props.audio, debouncedAudio)
 
 onUnmounted(() => {
-  props.video?.stop()
-  props.audio?.stop()
+  props.video?.stop?.()
+  props.audio?.stop?.()
 })
 
 const isTalking = computed(() => {
