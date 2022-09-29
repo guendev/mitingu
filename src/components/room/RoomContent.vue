@@ -13,6 +13,7 @@
               :video="item.videoTrack"
               :audio="item.audioTrack"
               :has-video="userStore.user?.id === item.uid ? agoraStore.isEnableVideo : !!item.videoTrack"
+              :has-audio="userStore.user?.id === item.uid ? agoraStore.isEnableAudio : !!item.audioTrack"
           />
         </template>
       </room-layout2>

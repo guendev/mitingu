@@ -42,6 +42,7 @@ const props = defineProps<{
   video?: MediaProtocol
   audio?: MediaProtocol
   hasVideo?: boolean
+  hasAudio?: boolean
 }>()
 
 const _userDocument = ref<UserDocument|undefined>()
@@ -68,10 +69,15 @@ const getUserDetail = async () => {
 }
 onMounted(() => getUserDetail())
 
-onMounted(() => nextTick(() => {
-  props.audio?.play()
-}))
-watch(() => props.audio, () => props.audio?.play())
+const debouncedAudio = useDebounceFn(() => nextTick(() => {
+  console.log('debouncedAudio')
+  if (props.uid !== userStore.user?.id) {
+    props.video?.play(videoRef.value!)
+  }
+}), 300)
+
+onMounted(() => nextTick(debouncedAudio))
+watch(() => props.audio, debouncedAudio)
 
 </script>
 
