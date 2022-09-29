@@ -14,6 +14,8 @@
       <img class="w-full h-full object-cover" alt="" :src="_userDocument?.avatar" />
     </div>
 
+    <div class="z-20 absolute top-0 left-0 w-full h-full border-[2px] border-primary-500 transition transform rounded-lg" :class="[isTalking ? '' : 'opacity-0']"></div>
+
     <div class="z-20 absolute bottom-0 left-0 flex items-center transform translate-x-4 -translate-y-4 text-white bg-[#03030385] text-[12px] px-3 rounded-2xl py-1">
       <i-ri-user-4-fill />
       <span>
@@ -83,6 +85,10 @@ watch(() => props.audio, debouncedAudio)
 onUnmounted(() => {
   props.video?.stop()
   props.audio?.stop()
+})
+
+const isTalking = computed(() => {
+  return agoraStore.volumes.filter(volume => volume.id === props.uid)?.[0]?.level > 5
 })
 </script>
 
