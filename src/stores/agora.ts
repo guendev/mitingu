@@ -57,15 +57,11 @@ export const useAgoraStore = defineStore({
         },
 
         async toggleAudio() {
-            if (this.localTracks.audio) {
-                await this.localTracks.audio.setMuted(!this.localTracks.audio.muted)
-            }
+            await this.localTracks.audio?.setMuted(!this.localTracks.audio.muted)
         },
 
         async toggleVideo() {
-            if (this.localTracks.video) {
-                await this.localTracks.video.setMuted(!this.localTracks.video.muted)
-            }
+            await this.localTracks.video?.setMuted(!this.localTracks.video.muted)
         },
 
         async join(chanel: string, uid: UID) {
