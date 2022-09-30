@@ -7,6 +7,7 @@ interface IRoomStore {
     page: 'confirm' | 'room' | 'kicked'
     sidebar?: 'users' | 'chat' | 'settings'
     members: UserDocument[]
+    mode: 'grid' | 'flex'
 }
 
 export const useRoomStore = defineStore({
@@ -16,7 +17,8 @@ export const useRoomStore = defineStore({
         goal: undefined,
         sidebar: undefined,
         page: 'confirm',
-        members: []
+        members: [],
+        mode: 'grid'
     }),
 
 

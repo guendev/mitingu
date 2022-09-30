@@ -7,8 +7,8 @@
 
     <div
         ref="layoutRef"
-        class="dynamic-layout flex flex-wrap h-full justify-center items-center -m-2"
-        :class="['_' + count]"
+        class="dynamic-layout flex-wrap h-full justify-center items-center -m-2"
+        :class="['_' + count, roomStore.mode]"
     >
       <div
           v-for="(item, index) in items"
@@ -28,7 +28,9 @@
 </template>
 
 <script lang="ts" setup>
-import {UID} from "agora-rtc-sdk-ng";
+import {UID} from "agora-rtc-sdk-ng"
+
+const roomStore = useRoomStore()
 
 const props = defineProps<{
   items: (any & {
@@ -44,6 +46,10 @@ const containerRef = ref<HTMLDivElement>()
 const { width: containerWidth, height: containerHeight } = useElementSize(containerRef)
 
 const itemStyle = computed(() => {
+
+  if (roomStore.mode === 'grid') {
+    return {}
+  }
 
 
   if(!containerHeight.value || !containerWidth.value) {

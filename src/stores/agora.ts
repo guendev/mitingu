@@ -79,19 +79,22 @@ export const useAgoraStore = defineStore({
 
                 if(index > -1) {
 
-                    const remoteUser = Object.assign({}, this.mapRemoteUsers[index])
-
                     if(mediaType === "audio") {
-                        remoteUser.audioTrack = user.audioTrack
-                        remoteUser.hasAudio = user.hasAudio
+                        this.mapRemoteUsers[index].audioTrack = user.audioTrack
+                        this.mapRemoteUsers[index].hasAudio = user.hasAudio
                     } else if (mediaType === "video") {
-                        remoteUser.videoTrack = user.videoTrack
-                        remoteUser.hasVideo = user.hasVideo
+                        this.mapRemoteUsers[index].videoTrack = user.videoTrack
+                        this.mapRemoteUsers[index].hasVideo = user.hasVideo
                     }
 
-                    this.mapRemoteUsers[index] = remoteUser
                 } else {
-                    this.mapRemoteUsers.push(user)
+                    this.mapRemoteUsers.push({
+                        uid: user.uid,
+                        audioTrack: user.audioTrack,
+                        hasAudio: user.hasAudio,
+                        videoTrack: user.videoTrack,
+                        hasVideo: user.hasVideo
+                    })
                 }
             }
 
