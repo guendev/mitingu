@@ -18,7 +18,7 @@ export const useRoomStore = defineStore({
         sidebar: undefined,
         page: 'confirm',
         members: [],
-        mode: 'grid'
+        mode: 'flex'
     }),
 
 
