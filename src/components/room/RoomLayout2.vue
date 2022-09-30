@@ -7,7 +7,7 @@
 
     <div
         ref="layoutRef"
-        class="dynamic-layout flex-wrap h-full justify-center items-center -m-2"
+        class="dynamic-layout flex-wrap h-full justify-center items-center"
         :class="['_' + count, roomStore.mode]"
     >
       <div
@@ -17,7 +17,7 @@
           :class="['_' + index]"
           :style="itemStyle"
       >
-        <div class="w-full h-full p-2">
+        <div class="w-full h-full">
           <div class="w-full h-full bg-white rounded-lg overflow-hidden">
             <slot :item="item"></slot>
           </div>
@@ -46,6 +46,50 @@ const containerRef = ref<HTMLDivElement>()
 const { width: containerWidth, height: containerHeight } = useElementSize(containerRef)
 
 const itemStyle = computed(() => {
+  /**
+   * Tính theo coonng thức
+   * Gọi x là nhiều rộng: containerWidth
+   * Gọi y là chiều cao: containerHeight
+   * => Diện thích S = x * y
+   *
+   * Gọi n là số phần tử: props.items.length
+   * => Diện tích mỗi phần là s = S/n
+   *
+   * Gọi a và b lầ lượt là chiều dài và chiều rộng mỗi phần tử
+   * Ta có hệ 2 phương trình 3 ẩn như sau
+   * 1. a * b = s
+   * 2. a/b xấp xỉ bằng R
+   * Với R là tỉ lệ 2 cạnh. Chiều dài / chiều rộng
+   * => a = s/b
+   * => R xấp xỉ bằng s/b^2
+   * => b xấp xỉ bằng sqrt(s/r)
+   */
+
+  /**
+   * @param r là tỉ lệ a/b
+   */
+  const autoFit = (r: number) => {
+    // Tổng hiện tích
+    const S = containerWidth.value * containerHeight.value
+    // Số người/phần tử
+    const n = props.items.length
+    // => diện tích của mỗi ng
+    const s = S/n
+    // Dùng công thức có được từ phía trên => chiều dài... cạnh trên dưới
+    const b = Math.sqrt(s/r)
+
+    return {
+      a: s / b,
+      b
+    }
+  }
+
+  const data = autoFit(1)
+
+  // return {
+  //   height: data.a + 'px',
+  //   width: data.b + 'px'
+  // }
 
   if (roomStore.mode === 'grid') {
     return {}
