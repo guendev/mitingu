@@ -5,7 +5,7 @@
         :class="[roomStore.sidebar ? 'mate-wrapper--sidebar md:pr-[340px]' : '']"
     >
       <!-- Array(20).fill({}) -->
-      <room-layout2 :items="Array(30).fill({})" :active="-1">
+      <room-layout2 :items="users" :active="-1">
         <template #default="{ item }">
           <media-item2
               :uid="item.uid"
