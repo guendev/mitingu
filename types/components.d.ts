@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     IMajesticonsUsers: typeof import('~icons/majesticons/users')['default']
     IMaterialSymbolsAdminPanelSettings: typeof import('~icons/material-symbols/admin-panel-settings')['default']
     IMaterialSymbolsAndroidContacts: typeof import('~icons/material-symbols/android-contacts')['default']
+    IMaterialSymbolsCheckSmall: typeof import('~icons/material-symbols/check-small')['default']
     IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
     IMaterialSymbolsVideoChatRounded: typeof import('~icons/material-symbols/video-chat-rounded')['default']
     IMdiMicrophoneOff: typeof import('~icons/mdi/microphone-off')['default']
@@ -56,6 +57,7 @@ declare module '@vue/runtime-core' {
     RoomLayout2: typeof import('./../src/components/room/RoomLayout2.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SettingsTab: typeof import('./../src/components/tabs/SettingsTab.vue')['default']
     TabContainer: typeof import('@components/tabs/MessagesTab.vue')['default']
   }
 }

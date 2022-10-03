@@ -5,7 +5,7 @@
         :class="[roomStore.sidebar ? 'mate-wrapper--sidebar md:pr-[340px]' : '']"
     >
       <!-- Array(20).fill({}) -->
-      <room-layout2 :items="users" :active="-1">
+      <room-layout2 :items="Array(5).fill({}) " :active="-1">
         <template #default="{ item }">
           <media-item2
               :uid="item.uid"
@@ -22,6 +22,7 @@
         <div class="w-full h-full relative">
           <messages-tab v-if="roomStore.sidebar === 'chat' " />
           <members-tab v-else-if="roomStore.sidebar === 'users'" />
+          <settings-tab v-else-if="roomStore.sidebar === 'settings'" />
         </div>
       </div>
 

@@ -117,7 +117,7 @@
         <i-bxs-message-square-dots />
       </button>
       <button
-        class="ml-4 md:ml-6 flex items-center justify-center text-[18px] hidden md:block"
+        class="ml-4 md:ml-6 flex items-center justify-center text-[18px]"
         :class="[
           roomStore.sidebar === 'settings'
             ? 'text-primary-500'
