@@ -97,6 +97,10 @@ setupProgressLoading()
 onMounted(() => {
   $loading?.finish()
 })
+
+onMounted(() => {
+  history.replaceState('', '', window.location.pathname)
+})
 </script>
 
 <style>
