@@ -29,7 +29,6 @@
 </template>
 
 <script lang="ts" setup>
-import {UserDocument} from "@entities/user";
 import {IRemoteAudioTrack, IRemoteVideoTrack, UID} from "agora-rtc-sdk-ng";
 import {useRTDB} from "@vueuse/firebase/useRTDB";
 
@@ -40,14 +39,11 @@ const route = useRoute()
 
 const props = defineProps<{
   uid: UID
-  userData?: UserDocument
   video?: Partial<IRemoteVideoTrack>
   audio?: Partial<IRemoteAudioTrack>
-  hasVideo?: boolean
-  hasAudio?: boolean
 }>()
 
-const userDetail = useRTDB(dbRef(getDatabase(), `room/${route.params.id}/media/${userStore.user?.id}`))
+const userDetail = useRTDB(dbRef(getDatabase(), `room/${route.params.id}/media/${props.uid}/`))
 const videoRef = ref<HTMLDivElement>()
 
 onMounted(() => nextTick(() => {

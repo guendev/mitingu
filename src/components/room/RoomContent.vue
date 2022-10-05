@@ -9,11 +9,8 @@
         <template #default="{ item }">
           <media-item2
               :uid="item.uid"
-              :user-data="item.userData"
               :video="item.videoTrack"
               :audio="item.audioTrack"
-              :has-video="userStore.user?.id === item.uid ? agoraStore.isEnableVideo : !!item.videoTrack"
-              :has-audio="userStore.user?.id === item.uid ? agoraStore.isEnableAudio : !!item.audioTrack"
           />
         </template>
       </room-layout2>
@@ -31,7 +28,6 @@
 </template>
 
 <script lang="ts" setup>
-import {UID} from "agora-rtc-sdk-ng"
 import MessagesTab from "@components/tabs/MessagesTab.vue"
 
 const route = useRoute()
@@ -41,7 +37,6 @@ const roomStore = useRoomStore()
 const userStore = useUserStore()
 const users = computed(() => [...agoraStore.mapRemoteUsers, {
   uid: userStore.user!.id,
-  userData: userStore.user,
   videoTrack: agoraStore.localTracks.video,
   audioTrack: agoraStore.localTracks.audio
 }])
