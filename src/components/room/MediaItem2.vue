@@ -67,7 +67,7 @@ const getUserDetail = async () => {
     _userDocument.value = userStore.user as any
   }
 }
-onMounted(() => getUserDetail())
+onMounted(() => nextTick(() => getUserDetail()))
 
 const debouncedAudio = useDebounceFn(() => nextTick(() => {
   if (props.uid !== userStore.user?.id) {
