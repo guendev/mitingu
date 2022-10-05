@@ -58,7 +58,7 @@ const debouncedRebuild = useDebounceFn(() => nextTick(() => props.video?.play?.(
 watch(() => props.video, () => debouncedRebuild())
 
 const getUserDetail = async () => {
-  const index = agoraStore.mapRemoteUsers.findIndex(user => user.uid === props.uid)
+  const index = agoraStore.mapRemoteUsers.findIndex(user => Number(user.uid) === Number(props.uid))
   if (index !== -1) {
     const result: any = await axios.get('/smileeye/detailUser/' + props.uid)
     agoraStore.mapRemoteUsers[index].userData = result
