@@ -39,8 +39,13 @@ const vueClientInit = async  () => {
     cookies?.remove('_token')
   }
 
+  if(/\/room\/\d+/.test(location.href) && !userStore.auth) {
+    await router.replace('/')
+    await agoraStore.reset()
+    await roomStore.reset()
+  }
+
   router.beforeEach(async (to, from, next) => {
-    console.log('Navigator to:', to.fullPath)
     if (to.name === 'room-id') {
       if(!userStore.auth) {
         return next({
