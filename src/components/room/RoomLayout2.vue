@@ -12,7 +12,7 @@
     >
       <div
           v-for="(item, index) in items"
-          :key="index"
+          :key="item.id"
           class="relative item"
           :class="['_' + index]"
           :style="itemStyle"

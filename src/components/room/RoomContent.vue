@@ -11,6 +11,7 @@
               :uid="item.uid"
               :video="item.videoTrack"
               :audio="item.audioTrack"
+              :meta="usersDetail?.[item.uid]"
           />
         </template>
       </room-layout2>
@@ -29,6 +30,7 @@
 
 <script lang="ts" setup>
 import MessagesTab from "@components/tabs/MessagesTab.vue"
+import {useRTDB} from "@vueuse/firebase";
 
 const route = useRoute()
 
@@ -84,6 +86,8 @@ onMounted(async () => {
     await checkInvite()
   }
 })
+
+const usersDetail = useRTDB(dbRef(getDatabase(), `room/${route.params.id}/media/`))
 
 </script>
 

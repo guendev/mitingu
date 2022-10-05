@@ -1,9 +1,9 @@
 <template>
   <div class="user-media relative h-full w-full">
     <div
-      class="relative z-10 flex h-full w-full items-center overflow-hidden rounded-lg transition"
+      class="relative z-10 flex h-full w-full items-center overflow-hidden rounded-lg"
       :class="[
-        !userDetail?.isEnableVideo ? 'bg-gray-400 opacity-0' : 'bg-white'
+        !meta?.isEnableVideo ? 'bg-gray-400 opacity-0' : 'bg-white'
       ]"
     >
       <div class="aspect-w-16 aspect-h-9 relative w-full">
@@ -12,13 +12,13 @@
     </div>
 
     <div
-      class="absolute top-1/2 left-1/2 z-20 h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 transform overflow-hidden rounded-full bg-gray-300 transition"
-      :class="[userDetail?.isEnableVideo ? 'scale-75 opacity-0' : '']"
+      class="absolute top-1/2 left-1/2 z-20 h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 transform overflow-hidden rounded-full bg-gray-300"
+      :class="[meta?.isEnableVideo ? 'scale-75 opacity-0' : '']"
     >
       <img
         class="h-full w-full object-cover"
         alt=""
-        :src="userDetail?.user?.avatar"
+        :src="meta?.user?.avatar"
       />
     </div>
 
@@ -32,7 +32,7 @@
     >
       <i-ri-user-4-fill />
       <span>
-        {{ userDetail?.user?.name }}
+        {{ meta?.user?.name }}
       </span>
     </div>
   </div>
@@ -40,7 +40,6 @@
 
 <script lang="ts" setup>
 import { IRemoteAudioTrack, IRemoteVideoTrack, UID } from 'agora-rtc-sdk-ng'
-import { onValue } from 'firebase/database'
 
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
@@ -51,9 +50,9 @@ const props = defineProps<{
   uid: UID
   video?: Partial<IRemoteVideoTrack>
   audio?: Partial<IRemoteAudioTrack>
+  meta: any
 }>()
 
-const userDetail = ref()
 const videoRef = ref<HTMLDivElement>()
 
 onMounted(() =>
@@ -96,17 +95,6 @@ const isTalking = computed(() => {
     5
   )
 })
-
-const db = getDatabase()
-
-const debouncedUser = useDebounceFn(async () => {
-  const starCountRef = dbRef(db, `room/${route.params.id}/media/${props.uid}/`)
-  onValue(starCountRef, (snapshot) => {
-    userDetail.value = snapshot.val();
-  })
-}, 300)
-
-watch(() => props.uid, debouncedUser, { immediate: true })
 </script>
 
 <style></style>
