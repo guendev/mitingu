@@ -4,7 +4,7 @@
         class="w-full h-full rounded-lg overflow-hidden relative z-10 transition flex items-center"
         :class="[!hasVideo ? 'opacity-0 bg-gray-400' : 'bg-white']"
     >
-      <div class="relative w-full aspect-w-12 aspect-h-7">
+      <div class="relative w-full aspect-w-16 aspect-h-9">
         <div ref="videoRef" class="w-full h-full" />
       </div>
     </div>

@@ -6,7 +6,7 @@
           <h1 class="text-current mb-0 font-medium text-[25px]">
             Phòng học: {{ $route.params.id }}
           </h1>
-          <div class="w-full h-full relative md:w-[450px] aspect-w-12 overflow-hidden aspect-h-7 relative mt-3">
+          <div class="w-full h-full relative md:w-[450px] aspect-w-16 overflow-hidden aspect-h-9 relative mt-3">
             <div
                 ref="videoRef"
                 class="w-full h-full bg-gray-500 rounded-lg overflow-hidden absolute z-10 top-0 left-0 transition"
