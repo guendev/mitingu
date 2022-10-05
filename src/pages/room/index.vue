@@ -17,6 +17,8 @@
 
 <script lang="ts" setup>
 const roomStore = useRoomStore()
+const userStore = useUserStore()
+const agoraStore = useAgoraStore()
 
 const axios = useAxios()
 const route = useRoute()
@@ -53,8 +55,24 @@ const debouncedRebuild = useDebounceFn(() => {
   color.value = height.value - 60 + 'px'
 }, 500)
 
+const debouncedUpdateMedia = useDebounceFn(async () => {
+  await dbSet(dbRef(getDatabase(), `room/${route.params.id}/media/${userStore.user?.id}`),{
+    user: {
+      id: userStore.user?.id,
+      name: userStore.user?.name,
+      avatar: userStore.user?.avatar
+    },
+    isEnableAudio: agoraStore.isEnableAudio,
+    isEnableVideo: agoraStore.isEnableVideo,
+  })
+}, 10)
+
 watch(height, () => {
   debouncedRebuild()
+}, { immediate: true })
+
+watch([() => userStore.user, () => agoraStore.isEnableAudio, () => agoraStore.isEnableVideo], () => {
+  debouncedUpdateMedia()
 }, { immediate: true })
 </script>
 
