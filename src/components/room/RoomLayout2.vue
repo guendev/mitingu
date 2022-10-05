@@ -19,7 +19,7 @@
       >
         <div class="w-full h-full p-2">
           <div class="w-full h-full bg-white rounded-lg overflow-hidden">
-            <slot :item="item"></slot>
+            <slot :item="item" :key="index"></slot>
           </div>
         </div>
       </div>
