@@ -6,7 +6,7 @@
         !meta?.isEnableVideo ? 'bg-gray-400 opacity-0' : 'bg-white'
       ]"
     >
-      <div class="aspect-w-16 aspect-h-9 relative w-full">
+      <div class="f-aspect-w-16 f-aspect-h-9 relative w-full h-full">
         <div ref="videoRef" class="h-full w-full" />
       </div>
     </div>
