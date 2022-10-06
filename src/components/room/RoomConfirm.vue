@@ -98,7 +98,7 @@ watch(
   (val) => {
     nextTick(() => {
       if (videoRef.value) {
-        val?.play(videoRef.value)
+        val?.play(videoRef.value, { fit: 'contain' } )
       }
     })
   }
