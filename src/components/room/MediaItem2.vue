@@ -57,12 +57,12 @@ const videoRef = ref<HTMLDivElement>()
 
 onMounted(() =>
   nextTick(() => {
-    props.video?.play?.(videoRef.value!)
+    props.video?.play?.(videoRef.value!, { fit: 'contain' })
   })
 )
 
 const debouncedRebuild = useDebounceFn(
-  () => nextTick(() => props.video?.play?.(videoRef.value!)),
+  () => nextTick(() => props.video?.play?.(videoRef.value!, { fit: 'contain' })),
   300
 )
 
