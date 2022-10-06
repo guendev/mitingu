@@ -25,21 +25,25 @@ const route = useRoute()
 
 const getMembers = async () => {
   try {
-    roomStore.members = await axios.get(`/smileeye/list-member/goal_root_id=${route.params.id}`)
+    const [goalId, prefix] = (route.params.id as string).split('-')
+    roomStore.members = await axios.get(`/smileeye/list-member/goal_root_id=${goalId}`)
   } catch (e) {
     //
   }
 }
 
 const checkRoomAsync = async () => {
-  try {
-    const result: any = await axios.get(`/smileeye/detail-goal/goal_id=${route.params.id}`)
-    if(result) {
-      roomStore.goal = result
-      await getMembers()
+  if(/^\d*-\d*/.test(route.params.id as string)) {
+    const [goalId, prefix] = (route.params.id as string).split('-')
+    try {
+      const result: any = await axios.get(`/smileeye/detail-goal/goal_id=${goalId}`)
+      if(result) {
+        roomStore.goal = result
+        await getMembers()
+      }
+    } catch (e) {
+      //
     }
-  } catch (e) {
-    //
   }
 }
 
