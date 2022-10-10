@@ -43,7 +43,9 @@
             <div>
               <div class="flex items-center justify-between pb-2">
                 <div class="mr-3 flex items-center">
-                  <h4 class="mb-0 text-[17px] font-semibold">Thành Viên</h4>
+                  <h4 class="mb-0 text-[17px] font-semibold">
+                    {{ $t('member') }}
+                  </h4>
 
                   <span>({{ notInRoom.length }})</span>
                 </div>
@@ -55,7 +57,7 @@
                   :disabled="!!skipTime"
                   @click.stop="inviteAll"
                 >
-                  Mời Ngẫu Nhiên
+                  {{ $t('sendRandomInvitation') }}
                   <span v-if="skipTime" class="ml-1 text-xs"
                     >({{ skipTime }})</span
                   >
@@ -67,7 +69,7 @@
                   v-model="keyword"
                   class="w-full rounded-lg bg-gray-100 px-3 py-1.5 focus:bg-white focus:outline-0"
                   type="text"
-                  placeholder="Tìm kiếm..."
+                  :placeholder="$t('search')"
                   @click.stop
                 />
               </div>

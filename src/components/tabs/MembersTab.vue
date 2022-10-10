@@ -2,12 +2,16 @@
   <div class="relative flex h-full w-full flex-col">
 
     <div class="flex items-center mb-5">
-      <h4 class="flex-shrink-0 text-[18px] text-gray-700 mb-0">Danh Sách Lớp</h4>
+      <h4 class="flex-shrink-0 text-[18px] text-gray-700 mb-0">
+        {{ $t('listClassMates') }}
+      </h4>
       <div class="flex flex-col items-end ml-auto">
         <div>
           <a-switch v-model:checked="isOnlyRoom" />
         </div>
-        <span class="text-[11px] text-gray-500">Chỉ hiện học sinh Online</span>
+        <span class="text-[11px] text-gray-500">
+          {{ $t('onlyClassmatesOnline') }}
+        </span>
       </div>
 
       <button

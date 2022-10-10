@@ -1,7 +1,9 @@
 <template>
   <div class="h-full w-full relative flex flex-col">
     <div class="flex items-center mb-5">
-      <h4 class="flex-shrink-0 text-[18px] text-gray-700 mb-0">Tin Nhắn</h4>
+      <h4 class="flex-shrink-0 text-[18px] text-gray-700 mb-0">
+        {{ $t('chat') }}
+      </h4>
 
       <button
           class="bg-rose-500 text-white text-[18px] p-1 rounded-full transform bottom-2 md:hidden relative ml-auto"
@@ -31,7 +33,7 @@
         <input
             v-model='content'
             type='text'
-            placeholder='Type something...'
+            :placeholder='$t("writeMessage")'
             class='w-full px-2 ml-2 border-l focus:outline-0 bg-transparent text-sx'
         />
 

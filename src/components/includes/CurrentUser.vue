@@ -8,7 +8,7 @@
           <div class='flex items-center transition'>
             <i-uim-signout />
             <span class='text-[14px] ml-2'>
-                Đăng Xuất
+              {{ $t('logout') }}
               </span>
           </div>
         </a-menu-item>

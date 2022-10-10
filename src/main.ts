@@ -10,7 +10,6 @@ import VueLoadingIndicator from '@nguyenshort/vue3-loading-indicator'
 import { createPinia } from 'pinia'
 import { MotionPlugin } from '@vueuse/motion'
 import VueMitter from '@nguyenshort/vue3-mitt'
-import { ConfigProvider } from 'vant'
 
 
 import router from './routes'
@@ -18,10 +17,11 @@ import utils from "@plugins/utils";
 import axios from "@plugins/axios";
 import animejs from "@plugins/animejs";
 import dayjs from "@plugins/dayjs";
+import {i18n} from "@plugins/i18n";
 
 const app = createApp(App)
 
-app.use(ConfigProvider)
+app.use(i18n)
 app.use(createPinia())
 app.use(router)
 /**

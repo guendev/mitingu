@@ -1,8 +1,28 @@
 <template>
   <div id="confirm" class="w-full h-full min-h-screen relative">
 
-    <div v-if="userStore.auth" class='absolute top-5 right-5'>
-      <current-user />
+    <div class='absolute top-5 right-5'>
+      <div class="flex items-center">
+
+        <button
+            class="text-[18px] transition"
+            :class="[$i18n.locale === 'vi' ? '' : 'opacity-50']"
+            @click="$i18n.locale = 'vi'"
+        >
+          <i-twemoji-flag-vietnam />
+        </button>
+
+        <button
+            class="text-[16px] transition ml-4 mr-5" @click="$i18n.locale = 'jp'"
+            :class="[$i18n.locale === 'jp' ? '' : 'opacity-50']"
+        >
+          <i-twemoji-flag-japan />
+        </button>
+
+        <current-user
+            v-if="userStore.auth"
+        />
+      </div>
     </div>
 
     <div class="max-w-bootstrap mx-auto w-full h-full flex flex-col-reverse md:flex-row px-3 md:px-0">
@@ -11,7 +31,9 @@
 
 
           <template v-if="!userStore.auth">
-            <h3 class="text-[27px] text-gray-200">Đăng Nhập</h3>
+            <h3 class="text-[27px] text-gray-200">
+              {{ $t('login') }}
+            </h3>
             <a-form
                 :model="formState"
                 name="basic"
@@ -23,7 +45,7 @@
               <a-form-item
                   label="Email"
                   name="email"
-                  :rules="[{ required: true, message: 'Please input your username!' }]"
+                  :rules="[{ required: true, message: $t('errorEmail') }]"
               >
                 <a-input v-model:value="formState.email" />
               </a-form-item>
@@ -31,31 +53,35 @@
               <a-form-item
                   label="Password"
                   name="password"
-                  :rules="[{ required: true, message: 'Please input your password!' }]"
+                  :rules="[{ required: true, message: $t('Mật khẩu là bắt buộc') }]"
               >
                 <a-input-password v-model:value="formState.password" />
               </a-form-item>
 
               <a-form-item>
-                <a-button type="primary" html-type="submit">Submit</a-button>
+                <a-button type="primary" html-type="submit">
+                  {{ $t('login') }}
+                </a-button>
               </a-form-item>
             </a-form>
           </template>
 
           <template v-else>
-            <h3 class="text-[27px] text-gray-200">Tham gia một cuộc hội thoại</h3>
+            <h3 class="text-[27px] text-gray-200">
+              {{ $t('welcome') }}
+            </h3>
 
             <div class="md:flex items-center">
               <a-button type="danger" size='large' @click="newRoom">
                 <template #icon>
                   <i-bx-bxs-video-recording class='inline mr-2' />
                 </template>
-                Cuộc Họp Mới
+                {{ $t('newRoom') }}
               </a-button>
 
               <a-input
                   v-model:value='roomID'
-                  placeholder='Hoặc nhập ID phòng'
+                  :placeholder='$t("enterRoomID")'
                   class='md:ml-4 mt-4 md:mt-0'
                   @keyup.enter='toRoom(roomID.toString())'
               >

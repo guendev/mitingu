@@ -3,7 +3,7 @@
 
     <div class="flex items-center mb-5">
       <h4 class="flex-shrink-0 text-[18px] text-gray-700 mb-0">
-        Cài Đặt Phòng
+        {{ $t('setting') }}
       </h4>
       <button
           class="bg-rose-500 text-white text-[18px] p-1 rounded-full transform bottom-2 md:hidden relative ml-5"
@@ -15,7 +15,9 @@
 
     <div class="flex-full relative overflow-y-auto" id="members-tab">
       <div>
-        <h5 class="text-gray-500">Chế độ hiển thị</h5>
+        <h5 class="text-gray-500">
+          {{ $t('displayMode') }}
+        </h5>
 
         <div class="flex items-center">
           <div class="flex items-center cursor-pointer" @click="roomStore.mode = 'scroll'">
@@ -25,7 +27,9 @@
             >
               <i-material-symbols-check-small class="check-icon opacity-0 relative z-20 transform transition scale-0" />
             </div>
-            <span class="text-[14px] ml-1">Cuộn</span>
+            <span class="text-[14px] ml-1">
+              {{ $t('scroll') }}
+            </span>
           </div>
 
           <div class="flex items-center cursor-pointer ml-5" @click="roomStore.mode = 'flexible'">
@@ -35,11 +39,39 @@
             >
               <i-material-symbols-check-small class="check-icon opacity-0 relative z-20 transform transition scale-0" />
             </div>
-            <span class="text-[14px] ml-1">Lưới</span>
+            <span class="text-[14px] ml-1">
+              {{ $t('grid') }}
+            </span>
           </div>
         </div>
 
       </div>
+
+      <div class="mt-5">
+        <h5 class="text-gray-500">
+          {{ $t('languages') }}
+        </h5>
+
+        <div class="flex items-center">
+
+          <button
+              class="text-[25px] transition"
+              :class="[$i18n.locale === 'vi' ? '' : 'opacity-50']"
+              @click="$i18n.locale = 'vi'"
+          >
+            <i-twemoji-flag-vietnam />
+          </button>
+
+          <button
+              class="text-[25px] transition ml-4" @click="$i18n.locale = 'jp'"
+              :class="[$i18n.locale === 'jp' ? '' : 'opacity-50']"
+          >
+            <i-twemoji-flag-japan />
+          </button>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </template>

@@ -26,7 +26,7 @@
     </div>
 
     <a-button type='primary' class='ml-auto' size='small' :disabled='!!skipTime || disabled' @click.stop='inviteMember(member)'>
-      Mời
+      {{ $t('invite') }}
       <span v-if='skipTime' class='text-xs ml-1'>({{ skipTime }})</span>
     </a-button>
 

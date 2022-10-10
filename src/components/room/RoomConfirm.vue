@@ -4,7 +4,7 @@
       <div class="md:w-1/2 flex items-center justify-center">
         <div class="text-gray-300">
           <h1 class="text-current mb-0 font-medium text-[25px]">
-            Phòng học: {{ $route.params.id }}
+            {{ $t('class') }}: {{ $route.params.id }}
           </h1>
           <div class="w-full h-full relative md:w-[450px] aspect-w-16 overflow-hidden aspect-h-9 relative mt-3">
             <div
@@ -16,11 +16,15 @@
               <h3
                   v-if="!agoraStore.isEnableVideo"
                   class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-[18px] z-20"
-              >Bạn đã tắt camera</h3>
+              >
+                {{ $t('offedCamera') }}
+              </h3>
             </div>
           </div>
           <div class="md:w-[400px]">
-            <p class="mt-3 text-[11px] opacity-50">Việc làm gia cuộc gọi sẽ coi như bạn sẽ đồng ý với các điều khoản và chính sách của chúng tôi.</p>
+            <p class="mt-3 text-[11px] opacity-50">
+              {{ $t('term') }}
+            </p>
 
             <div class="flex items-center">
 
@@ -49,14 +53,14 @@
                   :loading="loading"
                   @click="joinRoom"
               >
-                Tham Gia
+                {{ $t('join') }}
               </a-button>
 
               <a-button
                   type="danger"
                   class="!rounded-full ml-4"
               >
-                Huỷ Bỏ
+                {{ $t('cancel') }}
               </a-button>
 
             </div>
@@ -98,7 +102,7 @@ watch(
   (val) => {
     nextTick(() => {
       if (videoRef.value) {
-        val?.play(videoRef.value, { fit: 'contain' } )
+        val?.play(videoRef.value, { fit: 'contain'} )
       }
     })
   }

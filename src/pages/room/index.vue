@@ -1,9 +1,35 @@
 <template>
   <div
     id="room"
-    class="h-screen"
+    class="h-screen relative"
     :class="[roomStore.page === 'room' ? 'bg-primary-50' : '' ]"
   >
+
+    <div v-if="roomStore.page === 'confirm'" class='absolute top-5 right-5'>
+      <div class="flex items-center">
+
+        <button
+            class="text-[18px] transition"
+            :class="[$i18n.locale === 'vi' ? '' : 'opacity-50']"
+            @click="$i18n.locale = 'vi'"
+        >
+          <i-twemoji-flag-vietnam />
+        </button>
+
+        <button
+            class="text-[16px] transition ml-4 mr-5" @click="$i18n.locale = 'jp'"
+            :class="[$i18n.locale === 'jp' ? '' : 'opacity-50']"
+        >
+          <i-twemoji-flag-japan />
+        </button>
+
+        <current-user
+            v-if="userStore.auth"
+        />
+      </div>
+    </div>
+
+
     <room-confirm v-if="roomStore.page === 'confirm'" />
     <template v-else-if="roomStore.page === 'room'">
       <room-head />
