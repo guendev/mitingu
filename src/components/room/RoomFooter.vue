@@ -135,6 +135,7 @@
 
 <script lang="ts" setup>
 import { v4 as uuidv4 } from 'uuid'
+import {UserDocument} from "@entities/user";
 
 const route = useRoute()
 const router = useRouter()
@@ -169,6 +170,23 @@ const inviteAll = async () => {
       clearInterval(timer)
     }
   }, 1000)
+
+  const getRandom = (users: any[], x: number): any => {
+    if(users.length >= x) {
+      return users
+    }
+
+    const _users = notInRoom.value.filter((u) => users.findIndex((uu) => uu.id === u.id) === -1)
+    const random = _users[Math.floor(Math.random() * _users.length)]
+    if(!random) {
+      return users
+    }
+    users.push(random)
+    return getRandom(users, x)
+  }
+
+  const users = getRandom([], 5)
+  console.log(users)
 
   await Promise.all(
       notInRoom.value.map(async (member) => {
