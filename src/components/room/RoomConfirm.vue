@@ -59,6 +59,7 @@
               <a-button
                   type="danger"
                   class="!rounded-full ml-4"
+                  @click="$router.push('/')"
               >
                 {{ $t('cancel') }}
               </a-button>
