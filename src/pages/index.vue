@@ -25,8 +25,8 @@
       </div>
     </div>
 
-    <div class="max-w-bootstrap mx-auto w-full h-full flex flex-col-reverse md:flex-row px-3 md:px-0">
-      <div class="w-full md:w-1/2 flex items-center justify-center">
+    <div class="max-w-bootstrap mx-auto w-full h-full flex flex-col-reverse lg:flex-row px-3 lg:px-0">
+      <div class="w-full lg:w-1/2 flex items-center justify-center">
         <div class="text-gray-300">
 
 
@@ -82,7 +82,7 @@
               <a-input
                   v-model:value='roomID'
                   :placeholder='$t("enterRoomID")'
-                  class='md:ml-4 mt-4 md:mt-0'
+                  class='md:ml-4 mt-4 lg:mt-0'
                   @keyup.enter='toRoom(roomID.toString())'
               >
                 <template #prefix>
@@ -94,7 +94,7 @@
 
         </div>
       </div>
-      <div class="w-full md:w-1/2 h-full flex items-center justify-center">
+      <div class="w-full lg:w-1/2 h-full flex items-center justify-center">
         <img width="600" src="/images/homepage-hero.jpeg" alt="" />
       </div>
     </div>

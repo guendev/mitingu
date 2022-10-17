@@ -1,12 +1,12 @@
 <template>
   <div id="confirm" class="w-full h-full">
-    <div class="max-w-bootstrap mx-auto w-full h-full md:flex mt-40 md:mt-0 px-4 md:px-0">
-      <div class="md:w-1/2 flex items-center justify-center">
+    <div class="max-w-bootstrap mx-auto w-full h-full lg:flex mt-40 lg:mt-0 px-4 lg:px-0">
+      <div class="lg:w-1/2 flex items-center justify-center">
         <div class="text-gray-300">
           <h1 class="text-current mb-0 font-medium text-[25px]">
             {{ $t('class') }}: {{ $route.params.id }}
           </h1>
-          <div class="w-full h-full relative md:w-[450px] aspect-w-16 overflow-hidden aspect-h-9 relative mt-3">
+          <div class="w-full h-full relative lg:w-[450px] aspect-w-16 overflow-hidden aspect-h-9 relative mt-3">
             <div
                 ref="videoRef"
                 class="w-full h-full bg-gray-500 rounded-lg overflow-hidden absolute z-10 top-0 left-0 transition"
@@ -21,7 +21,7 @@
               </h3>
             </div>
           </div>
-          <div class="md:w-[400px]">
+          <div class="lg:w-[400px]">
             <p class="mt-3 text-[11px] opacity-50">
               {{ $t('term') }}
             </p>
@@ -70,8 +70,8 @@
 
         </div>
       </div>
-      <div class="w-1/2 h-full flex items-center justify-center hidden md:block">
-        <img width="600" src="/images/homepage-hero.jpeg" alt="" />
+      <div class="w-1/2 h-full items-center justify-center hidden lg:block relative">
+        <img class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" src="/images/homepage-hero.jpeg" alt="" />
       </div>
     </div>
   </div>
