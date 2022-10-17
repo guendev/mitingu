@@ -2,12 +2,15 @@
   <div id="room-footer" class="relative flex items-center md:justify-center">
     <div class="float-group left-[20px] hidden md:block">
       <h1 class="mb-0 text-[17px] text-gray-500">
-        {{ time }}<span class="hidden lg:inline"> : {{ roomStore.goal?.name || $route.params.id }}</span>
+        {{ time
+        }}<span class="hidden lg:inline">
+          : {{ roomStore.goal?.name || $route.params.id }}</span
+        >
       </h1>
     </div>
 
     <button
-      class="base-button md:ml-0 ml-4"
+      class="base-button ml-4 md:ml-0"
       :class="[
         agoraStore.isEnableAudio
           ? 'bg-primary-50 text-primary-500'
@@ -88,12 +91,12 @@
       </template>
     </a-dropdown>
 
-<!--    <button class="base-button ml-4 bg-primary-50 text-primary-500">-->
-<!--      <i-ph-dots-three-outline-vertical-fill />-->
-<!--    </button>-->
+    <!--    <button class="base-button ml-4 bg-primary-50 text-primary-500">-->
+    <!--      <i-ph-dots-three-outline-vertical-fill />-->
+    <!--    </button>-->
 
     <button
-      class="ml-4 flex h-9 md:h-10 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white"
+      class="ml-4 flex h-9 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white md:h-10"
       @click="outRoom"
     >
       <i-fluent-call-end-16-filled />
@@ -101,7 +104,7 @@
 
     <div class="float-group right-[20px] flex items-center text-gray-500">
       <button
-        class="ml-4 md:ml-6 flex items-center justify-center text-[18px] transition"
+        class="ml-4 flex items-center justify-center text-[18px] transition md:ml-6"
         :class="[
           roomStore.sidebar === 'users' ? 'text-primary-500' : 'text-gray-500'
         ]"
@@ -110,7 +113,7 @@
         <i-majesticons-users />
       </button>
       <button
-        class="ml-4 md:ml-6 flex items-center justify-center text-[18px]"
+        class="ml-4 flex items-center justify-center text-[18px] md:ml-6"
         :class="[
           roomStore.sidebar === 'chat' ? 'text-primary-500' : 'text-gray-500'
         ]"
@@ -119,7 +122,7 @@
         <i-bxs-message-square-dots />
       </button>
       <button
-        class="ml-4 md:ml-6 flex items-center justify-center text-[18px]"
+        class="ml-4 flex items-center justify-center text-[18px] md:ml-6"
         :class="[
           roomStore.sidebar === 'settings'
             ? 'text-primary-500'
@@ -134,8 +137,8 @@
 </template>
 
 <script lang="ts" setup>
-import { v4 as uuidv4 } from 'uuid'
-import {UserDocument} from "@entities/user";
+import { useRTDB } from '@vueuse/firebase'
+import {MessageDocument} from "@entities/message";
 
 const route = useRoute()
 const router = useRouter()
@@ -146,6 +149,30 @@ const agoraStore = useAgoraStore()
 
 const dayjs = useDayjs()
 const time = ref(dayjs().format('HH:mm'))
+
+const onlines = useRTDB(dbRef(getDatabase(), `online`))
+
+const _onlines = computed(() =>
+  Object.values(onlines?.value || {}).filter(
+    (user: any) => user.time > Date.now() - 3000
+  )
+)
+
+const notInRoom = computed(() =>
+  roomStore.members
+    .filter(
+      (member) =>
+        Number(userStore.user?.id) !== Number(member.id) &&
+        agoraStore.mapRemoteUsers.findIndex(
+          (e) => Number(e.uid) === Number(member.id)
+        ) === -1
+    )
+    .filter(
+      (member) =>
+        _onlines.value.findIndex((e: any) => Number(e.id) === Number(member.id)) !==
+        -1
+    )
+)
 
 let timer: string | number | NodeJS.Timer | undefined
 onMounted(() => {
@@ -166,19 +193,21 @@ const inviteAll = async () => {
   skipTime.value = 30
   const timer = setInterval(() => {
     skipTime.value--
-    if(skipTime.value === 0) {
+    if (skipTime.value === 0) {
       clearInterval(timer)
     }
   }, 1000)
 
   const getRandom = (users: any[], x: number): any => {
-    if(users.length >= x) {
+    if (users.length >= x) {
       return users
     }
 
-    const _users = notInRoom.value.filter((u) => users.findIndex((uu) => uu.id === u.id) === -1)
+    const _users = notInRoom.value.filter(
+      (u) => users.findIndex((uu) => uu.id === u.id) === -1
+    )
     const random = _users[Math.floor(Math.random() * _users.length)]
-    if(!random) {
+    if (!random) {
       return users
     }
     users.push(random)
@@ -189,9 +218,11 @@ const inviteAll = async () => {
   console.log(users)
 
   await Promise.all(
-      notInRoom.value.map(async (member) => {
-        const uid = uuidv4()
-        await dbSet(dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),{
+    notInRoom.value.map(async (member) => {
+      const uid = uuidv4()
+      await dbSet(
+        dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),
+        {
           id: uid,
           from: {
             id: userStore.user?.id,
@@ -208,18 +239,14 @@ const inviteAll = async () => {
           },
           disabled: false,
           createdAt: Date.now()
-        })
-      })
+        }
+      )
+    })
   )
 }
 
-
 const skipTime = ref(0)
 
-const notInRoom = computed(
-    () => roomStore.members
-        .filter(member => Number(userStore.user?.id) !== Number(member.id) && agoraStore.mapRemoteUsers.findIndex((e) => Number(e.uid) === Number(member.id)) === -1)
-)
 const keyword = ref('')
 
 const searchResult = computed(() => {
@@ -229,6 +256,19 @@ const searchResult = computed(() => {
   return notInRoom.value.filter((member) =>
     member.name?.toLowerCase().includes(keyword.value.toLowerCase())
   )
+})
+
+let timer2: string | number | NodeJS.Timer | undefined
+onMounted(() => {
+  timer2 = setInterval(async () => {
+    await dbSet(dbRef(getDatabase(), `online/${userStore.user?.id}`), {
+      id: userStore.user?.id,
+      name: Date.now()
+    })
+  }, 1000)
+})
+onUnmounted(() => {
+  clearInterval(timer2)
 })
 </script>
 
@@ -241,6 +281,6 @@ const searchResult = computed(() => {
 }
 
 .base-button {
-  @apply flex h-7 w-7 md:h-10 md:w-10 items-center justify-center rounded-full text-[18px] transition;
+  @apply flex h-7 w-7 items-center justify-center rounded-full text-[18px] transition md:h-10 md:w-10;
 }
 </style>
