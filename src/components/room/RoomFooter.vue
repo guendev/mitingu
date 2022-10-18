@@ -138,7 +138,6 @@
 
 <script lang="ts" setup>
 import { useRTDB } from '@vueuse/firebase'
-import {MessageDocument} from "@entities/message";
 
 const route = useRoute()
 const router = useRouter()
@@ -151,6 +150,14 @@ const dayjs = useDayjs()
 const time = ref(dayjs().format('HH:mm'))
 
 const onlines = useRTDB(dbRef(getDatabase(), `online`))
+
+const meettings = useRTDB(dbRef(getDatabase(), `meettings`))
+
+const _meeting = computed(() =>
+  Object.values(meettings?.value || {}).filter(
+    (user: any) => user.time > Date.now() - 3000
+  )
+)
 
 const _onlines = computed(() =>
   Object.values(onlines?.value || {}).filter(
@@ -169,8 +176,15 @@ const notInRoom = computed(() =>
     )
     .filter(
       (member) =>
-        _onlines.value.findIndex((e: any) => Number(e.id) === Number(member.id)) !==
-        -1
+        _onlines.value.findIndex(
+          (e: any) => Number(e.id) === Number(member.id)
+        ) !== -1
+    )
+    .filter(
+      (member) =>
+        _meeting.value.findIndex(
+          (e: any) => Number(e.id) === Number(member.id)
+        ) === -1
     )
 )
 
@@ -258,18 +272,18 @@ const searchResult = computed(() => {
   )
 })
 
-// let timer2: string | number | NodeJS.Timer | undefined
-// onMounted(() => {
-//   timer2 = setInterval(async () => {
-//     await dbSet(dbRef(getDatabase(), `online/${userStore.user?.id}`), {
-//       id: userStore.user?.id,
-//       name: Date.now()
-//     })
-//   }, 1000)
-// })
-// onUnmounted(() => {
-//   clearInterval(timer2)
-// })
+let timer2: string | number | NodeJS.Timer | undefined
+onMounted(() => {
+  timer2 = setInterval(async () => {
+    await dbSet(dbRef(getDatabase(), `meettings/${userStore.user?.id}`), {
+      id: userStore.user?.id,
+      time: Date.now()
+    })
+  }, 1000)
+})
+onUnmounted(() => {
+  clearInterval(timer2)
+})
 </script>
 
 <style scoped>
