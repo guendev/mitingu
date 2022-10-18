@@ -258,18 +258,18 @@ const searchResult = computed(() => {
   )
 })
 
-let timer2: string | number | NodeJS.Timer | undefined
-onMounted(() => {
-  timer2 = setInterval(async () => {
-    await dbSet(dbRef(getDatabase(), `online/${userStore.user?.id}`), {
-      id: userStore.user?.id,
-      name: Date.now()
-    })
-  }, 1000)
-})
-onUnmounted(() => {
-  clearInterval(timer2)
-})
+// let timer2: string | number | NodeJS.Timer | undefined
+// onMounted(() => {
+//   timer2 = setInterval(async () => {
+//     await dbSet(dbRef(getDatabase(), `online/${userStore.user?.id}`), {
+//       id: userStore.user?.id,
+//       name: Date.now()
+//     })
+//   }, 1000)
+// })
+// onUnmounted(() => {
+//   clearInterval(timer2)
+// })
 </script>
 
 <style scoped>
