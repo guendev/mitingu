@@ -208,7 +208,8 @@ onUnmounted(() => {
 
 const outRoom = async () => {
   await agoraStore.leave()
-  window.location.href = 'https://smileeye.edu.vn/'
+  window.close()
+  // window.location.href = 'https://smileeye.edu.vn/'
 }
 
 const inviteAll = async () => {
