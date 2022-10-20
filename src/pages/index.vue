@@ -13,10 +13,17 @@
         </button>
 
         <button
-            class="text-[16px] transition ml-4 mr-5" @click="$i18n.locale = 'jp'"
+            class="text-[16px] transition ml-4" @click="$i18n.locale = 'jp'"
             :class="[$i18n.locale === 'jp' ? '' : 'opacity-50']"
         >
           <i-twemoji-flag-japan />
+        </button>
+
+        <button
+            class="text-[16px] transition ml-4 mr-5" @click="$i18n.locale = 'en'"
+            :class="[$i18n.locale === 'en' ? '' : 'opacity-50']"
+        >
+          <i-flagpack-us />
         </button>
 
         <current-user

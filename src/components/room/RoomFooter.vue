@@ -96,7 +96,7 @@
     <!--    </button>-->
 
     <a-popconfirm
-        title="Bạn có chawcs muốn thoát phòng?"
+        :title="$t('leaveConfirm')"
         ok-text="Yes"
         cancel-text="No"
         @confirm="outRoom"
@@ -239,7 +239,7 @@ const inviteAll = async () => {
   const users = getRandom([], 5)
 
   await Promise.all(
-    notInRoom.value.map(async (member) => {
+      users.map(async (member: any) => {
       const uid = uuidv4()
       await dbSet(
         dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),

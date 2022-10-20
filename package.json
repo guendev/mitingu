@@ -50,6 +50,7 @@
     "@faker-js/faker": "^7.4.0",
     "@iconify-json/bx": "^1.1.4",
     "@iconify-json/bxs": "^1.1.4",
+    "@iconify-json/flagpack": "^1.1.2",
     "@iconify-json/fluent": "^1.1.16",
     "@iconify-json/ic": "^1.1.9",
     "@iconify-json/ion": "^1.1.3",

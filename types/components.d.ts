@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     IBxBxsVideoRecording: typeof import('~icons/bx/bxs-video-recording')['default']
     IBxsMessageSquareDots: typeof import('~icons/bxs/message-square-dots')['default']
     IBxVideoRecording: typeof import('~icons/bx/video-recording')['default']
+    IFlagpackUs: typeof import('~icons/flagpack/us')['default']
     IFluentCallEnd16Filled: typeof import('~icons/fluent/call-end16-filled')['default']
     IIcRoundMic: typeof import('~icons/ic/round-mic')['default']
     IIcRoundVideocam: typeof import('~icons/ic/round-videocam')['default']
