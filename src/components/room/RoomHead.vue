@@ -3,7 +3,7 @@
     <router-link to="/" class="w-[40px] block mr-auto">
       <img src="/images/logo.svg" alt="logo" class="w-full h-full" />
     </router-link>
-    <button class="text-gray-500 mr-7 text-[20px]">
+    <button class="text-gray-500 mr-7 text-[20px]" v-if="false">
       <i-bx-video-recording />
     </button>
     <current-user />

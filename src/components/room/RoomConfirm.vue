@@ -21,11 +21,7 @@
               </h3>
             </div>
           </div>
-          <div class="lg:w-[400px]">
-            <p class="mt-3 text-[11px] opacity-50">
-              {{ $t('term') }}
-            </p>
-
+          <div class="lg:w-[400px] mt-4">
             <div class="flex items-center">
 
               <button
@@ -79,6 +75,7 @@
 
 <script lang="ts" setup>
 
+const route = useRoute()
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
 const roomStore = useRoomStore()
@@ -91,6 +88,11 @@ const initAgora = async () => {
   agoraStore.localTracks = {
     audio,
     video,
+  }
+
+  const joined = window.localStorage.getItem('joined-' + route.params.id as string)
+  if (joined && Number(joined) > Date.now() - (1000 * 60 * 10)) {
+    await joinRoom()
   }
 }
 
@@ -109,12 +111,12 @@ watch(
   }
 )
 
-const route = useRoute()
 const loading = ref(false)
 const joinRoom = async () => {
   loading.value = true
   agoraStore.registerEvent()
   setTimeout(async () => {
+    window.localStorage.setItem('joined-' + route.params.id as string, Date.now().toString())
     await agoraStore.join(route.params.id as string, userStore.user!.id)
     loading.value = false
     roomStore.page = "room"

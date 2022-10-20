@@ -47,7 +47,7 @@
               <div class="flex items-center justify-between pb-2">
                 <div class="mr-3 flex items-center">
                   <h4 class="mb-0 text-[17px] font-semibold">
-                    {{ $t('member') }}
+                    {{ $t('online') }}
                   </h4>
 
                   <span>({{ notInRoom.length }})</span>
@@ -95,12 +95,18 @@
     <!--      <i-ph-dots-three-outline-vertical-fill />-->
     <!--    </button>-->
 
-    <button
-      class="ml-4 flex h-9 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white md:h-10"
-      @click="outRoom"
+    <a-popconfirm
+        title="Bạn có chawcs muốn thoát phòng?"
+        ok-text="Yes"
+        cancel-text="No"
+        @confirm="outRoom"
     >
-      <i-fluent-call-end-16-filled />
-    </button>
+      <button
+          class="ml-4 flex h-9 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white md:h-10"
+      >
+        <i-fluent-call-end-16-filled />
+      </button>
+    </a-popconfirm>
 
     <div class="float-group right-[20px] flex items-center text-gray-500">
       <button
@@ -138,6 +144,7 @@
 
 <script lang="ts" setup>
 import { useRTDB } from '@vueuse/firebase'
+import { v4 as uuidv4 } from 'uuid'
 
 const route = useRoute()
 const router = useRouter()
@@ -145,6 +152,7 @@ const router = useRouter()
 const roomStore = useRoomStore()
 const userStore = useUserStore()
 const agoraStore = useAgoraStore()
+
 
 const dayjs = useDayjs()
 const time = ref(dayjs().format('HH:mm'))
@@ -200,7 +208,7 @@ onUnmounted(() => {
 
 const outRoom = async () => {
   await agoraStore.leave()
-  await router.push('/')
+  window.location.href = 'https://smileeye.edu.vn/'
 }
 
 const inviteAll = async () => {
@@ -229,7 +237,6 @@ const inviteAll = async () => {
   }
 
   const users = getRandom([], 5)
-  console.log(users)
 
   await Promise.all(
     notInRoom.value.map(async (member) => {

@@ -16,6 +16,8 @@ const messages = {
         join: 'Tham gia',
         cancel: 'Hủy',
 
+        online: 'Online',
+
         member: 'Thành viên',
         sendRandomInvitation: 'Mời Ngẫu Nhiên',
         search: 'Tìm kiếm...',
@@ -49,6 +51,8 @@ const messages = {
         term: 'タームズ',
         join: '参加',
         cancel: 'キャンセル',
+
+        online: 'Online',
 
         member: 'メンバー',
         sendRandomInvitation: 'クラスメートを誘う',

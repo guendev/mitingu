@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     AInputPassword: typeof import('ant-design-vue/es')['InputPassword']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
+    APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     ASwitch: typeof import('ant-design-vue/es')['Switch']
     CurrentUser: typeof import('./../src/components/includes/CurrentUser.vue')['default']
     GridItem: typeof import('vue3-grid-layout')['GridItem']
