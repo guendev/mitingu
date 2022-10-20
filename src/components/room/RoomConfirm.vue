@@ -42,6 +42,14 @@
                 <i-ion-videocam-off v-else />
               </button>
 
+              <a-button
+                  type="danger"
+                  class="!rounded-full ml-4"
+                  @click="$router.push('/')"
+              >
+                {{ $t('cancel') }}
+              </a-button>
+
 
               <a-button
                   type="primary"
@@ -51,15 +59,6 @@
               >
                 {{ $t('join') }}
               </a-button>
-
-              <a-button
-                  type="danger"
-                  class="!rounded-full ml-4"
-                  @click="$router.push('/')"
-              >
-                {{ $t('cancel') }}
-              </a-button>
-
             </div>
 
           </div>
