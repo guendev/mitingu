@@ -68,6 +68,13 @@
           >
             <i-twemoji-flag-japan />
           </button>
+
+          <button
+              class="text-[25px] transition ml-4" @click="$i18n.locale = 'en'"
+              :class="[$i18n.locale === 'en' ? '' : 'opacity-50']"
+          >
+            <i-flagpack-us />
+          </button>
         </div>
       </div>
 
