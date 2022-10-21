@@ -295,20 +295,26 @@ onUnmounted(() => {
 const startTime = ref(0)
 let timer3: string | number | NodeJS.Timer | undefined
 onMounted(() => {
-  startTime.value = Date.now()
-  const uid = uuidv4()
-  timer3 = setInterval(async () => {
-    await dbSet(dbRef(getDatabase(), `meetting-logs/${route.params?.id}/` + uid), {
-      id: userStore.user?.id,
-      start: startTime.value,
-      end: Date.now(),
-      user: {
-        id: userStore.user?.id,
-        name: userStore.user?.name,
-        avatar: userStore.user?.avatar
-      }
-    })
-  }, 1000)
+  if (/^\d*-\d*-\d*/.test(route.params.id as string)) {
+    const [goalId, prefix, random] = (route.params.id as string).split('-')
+    startTime.value = Date.now()
+    const uid = uuidv4()
+    timer3 = setInterval(async () => {
+      await dbSet(
+        dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/${random}` + uid),
+        {
+          id: userStore.user?.id,
+          start: startTime.value,
+          end: Date.now(),
+          user: {
+            id: userStore.user?.id,
+            name: userStore.user?.name,
+            avatar: userStore.user?.avatar
+          }
+        }
+      )
+    }, 1000)
+  }
 })
 onUnmounted(() => {
   clearInterval(timer3)
