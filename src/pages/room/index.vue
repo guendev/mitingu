@@ -66,8 +66,8 @@ const getMembers = async () => {
 }
 
 const checkRoomAsync = async () => {
-  if(/^\d*-\d*/.test(route.params.id as string)) {
-    const [goalId, prefix] = (route.params.id as string).split('-')
+  if(/^\d*-\d*-\d*/.test(route.params.id as string)) {
+    const [goalId, prefix, random] = (route.params.id as string).split('-')
     try {
       const result: any = await axios.get(`/smileeye/detail-goal/goal_id=${goalId}`)
       if(result) {
