@@ -96,13 +96,13 @@
     <!--    </button>-->
 
     <a-popconfirm
-        :title="$t('leaveConfirm')"
-        ok-text="Yes"
-        cancel-text="No"
-        @confirm="outRoom"
+      :title="$t('leaveConfirm')"
+      ok-text="Yes"
+      cancel-text="No"
+      @confirm="outRoom"
     >
       <button
-          class="ml-4 flex h-9 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white md:h-10"
+        class="ml-4 flex h-9 w-14 items-center justify-center rounded-full bg-rose-500 text-[18px] text-white md:h-10"
       >
         <i-fluent-call-end-16-filled />
       </button>
@@ -152,7 +152,6 @@ const router = useRouter()
 const roomStore = useRoomStore()
 const userStore = useUserStore()
 const agoraStore = useAgoraStore()
-
 
 const dayjs = useDayjs()
 const time = ref(dayjs().format('HH:mm'))
@@ -240,7 +239,7 @@ const inviteAll = async () => {
   const users = getRandom([], 5)
 
   await Promise.all(
-      users.map(async (member: any) => {
+    users.map(async (member: any) => {
       const uid = uuidv4()
       await dbSet(
         dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),
@@ -292,6 +291,28 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(timer2)
 })
+
+const startTime = ref(0)
+let timer3: string | number | NodeJS.Timer | undefined
+onMounted(() => {
+  startTime.value = Date.now()
+  const uid = uuidv4()
+  timer3 = setInterval(async () => {
+    await dbSet(dbRef(getDatabase(), `meetting-logs/${route.params?.id}/` + uid), {
+      id: userStore.user?.id,
+      start: startTime.value,
+      end: Date.now(),
+      user: {
+        id: userStore.user?.id,
+        name: userStore.user?.name,
+        avatar: userStore.user?.avatar
+      }
+    })
+  }, 1000)
+})
+onUnmounted(() => {
+  clearInterval(timer3)
+})
 </script>
 
 <style scoped>
@@ -303,6 +324,6 @@ onUnmounted(() => {
 }
 
 .base-button {
-  @apply flex h-7 w-7 items-center justify-center rounded-full text-[18px] transition md:h-10 md:w-10;
+  @apply flex h-6 w-6 items-center justify-center rounded-full text-[18px] transition md:h-10 md:w-10;
 }
 </style>
