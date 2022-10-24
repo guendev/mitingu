@@ -82,7 +82,7 @@ const inviteMember = async (member: UserDocument) => {
   const [goalId, prefix, random] = (route.params.id as string).split('-')
 
   await dbSet(
-      dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/invites/${random}` + uid),
+      dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}/invites/${random}` + uid),
       {
         sender: {
           id: userStore.user?.id,

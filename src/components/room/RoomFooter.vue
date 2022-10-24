@@ -266,7 +266,7 @@ const inviteAll = async () => {
       const [goalId, prefix, random] = (route.params.id as string).split('-')
 
       await dbSet(
-          dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/invites/${random}` + uid),
+          dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}/invites/${random}` + uid),
           {
             sender: {
               id: userStore.user?.id,
@@ -321,7 +321,7 @@ onMounted(() => {
     const uid = uuidv4()
     timer3 = setInterval(async () => {
       await dbSet(
-        dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/logs/${random}` + uid),
+        dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}/logs/${random}` + uid),
         {
           id: userStore.user?.id,
           start: startTime.value,
@@ -341,7 +341,7 @@ onUnmounted(() => {
 })
 
 const [goalId, prefix, random] = (route.params.id as string).split('-')
-const logs = useRTDB(dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}`))
+const logs = useRTDB(dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}`))
 
 </script>
 
