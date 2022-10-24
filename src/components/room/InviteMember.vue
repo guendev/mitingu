@@ -78,6 +78,24 @@ const inviteMember = async (member: UserDocument) => {
     disabled: false,
     createdAt: Date.now()
   })
+
+  const [goalId, prefix, random] = (route.params.id as string).split('-')
+
+  await dbSet(
+      dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/invites/${random}` + uid),
+      {
+        sender: {
+          id: userStore.user?.id,
+          name: userStore.user?.name,
+          email: userStore.user?.email,
+        },
+        receiver: {
+          id: member.id,
+          name: member.name,
+          email: member.email,
+        },
+      }
+  )
 }
 </script>
 

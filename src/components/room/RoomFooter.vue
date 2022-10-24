@@ -208,7 +208,7 @@ onUnmounted(() => {
 const outRoom = async () => {
   await agoraStore.leave()
   window.close()
-  // window.location.href = 'https://smileeye.edu.vn/'
+  window.location.href = 'https://smileeye.edu.vn/'
 }
 
 const inviteAll = async () => {
@@ -262,6 +262,25 @@ const inviteAll = async () => {
           createdAt: Date.now()
         }
       )
+
+      const [goalId, prefix, random] = (route.params.id as string).split('-')
+
+      await dbSet(
+          dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/invites/${random}` + uid),
+          {
+            sender: {
+              id: userStore.user?.id,
+              name: userStore.user?.name,
+              email: userStore.user?.email,
+            },
+            receiver: {
+              id: member.id,
+              name: member.name,
+              email: member.email,
+            },
+          }
+      )
+
     })
   )
 }
@@ -296,12 +315,13 @@ const startTime = ref(0)
 let timer3: string | number | NodeJS.Timer | undefined
 onMounted(() => {
   if (/^\d*-\d*-\d*/.test(route.params.id as string)) {
+    // goalid - user - name
     const [goalId, prefix, random] = (route.params.id as string).split('-')
     startTime.value = Date.now()
     const uid = uuidv4()
     timer3 = setInterval(async () => {
       await dbSet(
-        dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/${random}` + uid),
+        dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}/logs/${random}` + uid),
         {
           id: userStore.user?.id,
           start: startTime.value,
@@ -319,6 +339,10 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(timer3)
 })
+
+const [goalId, prefix, random] = (route.params.id as string).split('-')
+const logs = useRTDB(dbRef(getDatabase(), `meetting-logs/${goalId}/${prefix}`))
+
 </script>
 
 <style scoped>

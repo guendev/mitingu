@@ -45,7 +45,7 @@
               <a-button
                   type="danger"
                   class="!rounded-full ml-4"
-                  @click="$router.push('/')"
+                  @click="leaveRoom"
               >
                 {{ $t('cancel') }}
               </a-button>
@@ -120,6 +120,12 @@ const joinRoom = async () => {
     loading.value = false
     roomStore.page = "room"
   }, 500)
+}
+
+const leaveRoom = async () => {
+  await agoraStore.leave()
+  window.close()
+  window.location.href = 'https://smileeye.edu.vn/'
 }
 
 </script>
