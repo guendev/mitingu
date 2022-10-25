@@ -169,6 +169,7 @@ const _takings = computed(() =>
     .map((t: any) => t.id)
 )
 
+// những ng ddnag ở trong p
 const _meeting = computed(() =>
   Object.values(meettings?.value || {}).filter(
     (user: any) => user.time > Date.now() - 3000

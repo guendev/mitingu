@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     ASwitch: typeof import('ant-design-vue/es')['Switch']
+    CallBar: typeof import('./../src/components/room/CallBar.vue')['default']
     CurrentUser: typeof import('./../src/components/includes/CurrentUser.vue')['default']
     GridItem: typeof import('vue3-grid-layout')['GridItem']
     GridLayout: typeof import('vue3-grid-layout')['GridLayout']

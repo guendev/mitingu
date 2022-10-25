@@ -111,6 +111,9 @@ onMounted(() => {
 <style>
 @import "@nguyenshort/vue3-loading-indicator/dist/style.css";
 
+@import "ant-design-vue/es/notification/style/index.css";
+
+
 .vue-process-bar ._process {
   transition: 200ms linear;
 }
