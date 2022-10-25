@@ -1,79 +1,88 @@
 <template>
-  <div id="confirm" class="w-full h-full">
-    <div class="max-w-bootstrap mx-auto w-full h-full lg:flex mt-40 lg:mt-0 px-4 lg:px-0">
-      <div class="lg:w-1/2 flex items-center justify-center">
+  <div id="confirm" class="h-full w-full">
+    <div
+      class="mx-auto mt-40 h-full w-full max-w-bootstrap px-4 lg:mt-0 lg:flex lg:px-0"
+    >
+      <div class="flex items-center justify-center lg:w-1/2">
         <div class="text-gray-300">
-          <h1 class="text-current mb-0 font-medium text-[25px]">
+          <h1 class="mb-0 text-[25px] font-medium text-current">
             {{ $t('class') }}: {{ $route.params.id }}
           </h1>
-          <div class="w-full h-full relative lg:w-[450px] aspect-w-16 overflow-hidden aspect-h-9 relative mt-3">
+          <div
+            class="aspect-w-16 aspect-h-9 relative relative mt-3 h-full w-full overflow-hidden lg:w-[450px]"
+          >
             <div
-                ref="videoRef"
-                class="w-full h-full bg-gray-500 rounded-lg overflow-hidden absolute z-10 top-0 left-0 transition"
-                :class="[agoraStore.isEnableVideo ? '' : 'opacity-0']"
+              ref="videoRef"
+              class="absolute top-0 left-0 z-10 h-full w-full overflow-hidden rounded-lg bg-gray-500 transition"
+              :class="[agoraStore.isEnableVideo ? '' : 'opacity-0']"
             ></div>
-            <div class="w-full h-full bg-slate-900">
+            <div class="h-full w-full bg-slate-900">
               <h3
-                  v-if="!agoraStore.isEnableVideo"
-                  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-[18px] z-20"
+                v-if="!agoraStore.isEnableVideo"
+                class="absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transform text-[18px] text-white"
               >
                 {{ $t('offedCamera') }}
               </h3>
             </div>
           </div>
-          <div class="lg:w-[400px] mt-4">
+          <div class="mt-4 lg:w-[400px]">
             <div class="flex items-center">
-
               <button
-                  class="w-10 h-10 rounded-full flex items-center justify-center text-[16px] transition"
-                  :class="[agoraStore.isEnableAudio ? 'bg-gray-700' : 'bg-rose-500']"
-                  @click="agoraStore.toggleAudio()"
+                class="flex h-10 w-10 items-center justify-center rounded-full text-[16px] transition"
+                :class="[
+                  agoraStore.isEnableAudio ? 'bg-gray-700' : 'bg-rose-500'
+                ]"
+                @click="agoraStore.toggleAudio()"
               >
                 <i-ic-round-mic v-if="agoraStore.isEnableAudio" />
                 <i-mdi-microphone-off v-else />
               </button>
 
               <button
-                  class="w-10 h-10 rounded-full flex items-center justify-center text-[16px] ml-4 transition"
-                  :class="[agoraStore.isEnableVideo ? 'bg-gray-700' : 'bg-rose-500']"
-                  @click="agoraStore.toggleVideo()"
+                class="ml-4 flex h-10 w-10 items-center justify-center rounded-full text-[16px] transition"
+                :class="[
+                  agoraStore.isEnableVideo ? 'bg-gray-700' : 'bg-rose-500'
+                ]"
+                @click="agoraStore.toggleVideo()"
               >
                 <i-ion-videocam v-if="agoraStore.isEnableVideo" />
                 <i-ion-videocam-off v-else />
               </button>
 
               <a-button
-                  type="danger"
-                  class="!rounded-full ml-4"
-                  @click="leaveRoom"
+                type="danger"
+                class="ml-4 !rounded-full"
+                @click="leaveRoom"
               >
                 {{ $t('cancel') }}
               </a-button>
 
-
               <a-button
-                  type="primary"
-                  class="ml-4 !rounded-full"
-                  :loading="loading"
-                  @click="joinRoom"
+                type="primary"
+                class="ml-4 !rounded-full"
+                :loading="loading"
+                @click="joinRoom"
               >
                 {{ $t('join') }}
               </a-button>
             </div>
-
           </div>
-
         </div>
       </div>
-      <div class="w-1/2 h-full items-center justify-center hidden lg:block relative">
-        <img class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" src="/images/homepage-hero.jpeg" alt="" />
+      <div
+        class="relative hidden h-full w-1/2 items-center justify-center lg:block"
+      >
+        <img
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform"
+          src="/images/homepage-hero.jpeg"
+          alt=""
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-
 const route = useRoute()
 const agoraStore = useAgoraStore()
 const userStore = useUserStore()
@@ -86,17 +95,25 @@ const initAgora = async () => {
   const [audio, video] = await window.AgoraRTC.createMicrophoneAndCameraTracks()
   agoraStore.localTracks = {
     audio,
-    video,
+    video
   }
 
-  const joined = window.localStorage.getItem('joined-' + route.params.id as string)
-  if (joined && Number(joined) > Date.now() - (1000 * 60 * 10)) {
+  const joined = window.localStorage.getItem(
+    ('joined-' + route.params.id) as string
+  )
+  if (joined && Number(joined) > Date.now() - 1000 * 60 * 10) {
     await joinRoom()
   }
 }
 
-onMounted(() => {
-  initAgora()
+onMounted(async () => {
+  await dbSet(dbRef(getDatabase(), `talkings/${userStore.user?.id}`), {
+    id: userStore.user?.id,
+    count: 0,
+    date: Date.now()
+  })
+
+  await initAgora()
 })
 
 watch(
@@ -104,7 +121,7 @@ watch(
   (val) => {
     nextTick(() => {
       if (videoRef.value) {
-        val?.play(videoRef.value, { fit: 'contain'} )
+        val?.play(videoRef.value, { fit: 'contain' })
       }
     })
   }
@@ -115,10 +132,13 @@ const joinRoom = async () => {
   loading.value = true
   agoraStore.registerEvent()
   setTimeout(async () => {
-    window.localStorage.setItem('joined-' + route.params.id as string, Date.now().toString())
+    window.localStorage.setItem(
+      ('joined-' + route.params.id) as string,
+      Date.now().toString()
+    )
     await agoraStore.join(route.params.id as string, userStore.user!.id)
     loading.value = false
-    roomStore.page = "room"
+    roomStore.page = 'room'
   }, 500)
 }
 
@@ -127,11 +147,10 @@ const leaveRoom = async () => {
   window.close()
   window.location.href = 'https://smileeye.edu.vn/'
 }
-
 </script>
 
 <style scoped>
 #confirm {
-  @apply flex justify-center items-center bg-[#101c37] ;
+  @apply flex items-center justify-center bg-[#101c37];
 }
 </style>

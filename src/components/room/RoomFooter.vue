@@ -160,6 +160,14 @@ const onlines = useRTDB(dbRef(getDatabase(), `online`))
 
 const meettings = useRTDB(dbRef(getDatabase(), `meettings`))
 
+const talkings = useRTDB(dbRef(getDatabase(), `talkings`))
+
+const _takings = computed(() =>
+  Object.values(talkings?.value || {}).filter(
+    (t) => t.roomId === route.params.id
+  )
+)
+
 const _meeting = computed(() =>
   Object.values(meettings?.value || {}).filter(
     (user: any) => user.time > Date.now() - 3000
@@ -181,12 +189,14 @@ const notInRoom = computed(() =>
           (e) => Number(e.uid) === Number(member.id)
         ) === -1
     )
+    // lọc những bạn onlines
     .filter(
       (member) =>
         _onlines.value.findIndex(
           (e: any) => Number(e.id) === Number(member.id)
         ) !== -1
     )
+    // lọc những bạn đang trong phòng học
     .filter(
       (member) =>
         _meeting.value.findIndex(
@@ -266,21 +276,23 @@ const inviteAll = async () => {
       const [goalId, prefix, random] = (route.params.id as string).split('-')
 
       await dbSet(
-          dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}/invites/${random}` + uid),
-          {
-            sender: {
-              id: userStore.user?.id,
-              name: userStore.user?.name,
-              email: userStore.user?.email,
-            },
-            receiver: {
-              id: member.id,
-              name: member.name,
-              email: member.email,
-            },
+        dbRef(
+          getDatabase(),
+          `meeting-logs/${goalId}/${prefix}/invites/${random}` + uid
+        ),
+        {
+          sender: {
+            id: userStore.user?.id,
+            name: userStore.user?.name,
+            email: userStore.user?.email
+          },
+          receiver: {
+            id: member.id,
+            name: member.name,
+            email: member.email
           }
+        }
       )
-
     })
   )
 }
@@ -321,7 +333,10 @@ onMounted(() => {
     const uid = uuidv4()
     timer3 = setInterval(async () => {
       await dbSet(
-        dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}/logs/${random}` + uid),
+        dbRef(
+          getDatabase(),
+          `meeting-logs/${goalId}/${prefix}/logs/${random}` + uid
+        ),
         {
           id: userStore.user?.id,
           start: startTime.value,
@@ -343,6 +358,20 @@ onUnmounted(() => {
 const [goalId, prefix, random] = (route.params.id as string).split('-')
 const logs = useRTDB(dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}`))
 
+// gi số ng trong phòng
+let timer4: string | number | NodeJS.Timer | undefined
+onMounted(() => {
+  timer4 = setInterval(async () => {
+    await dbSet(dbRef(getDatabase(), `talkings/${userStore.user?.id}`), {
+      id: userStore.user?.id,
+      count: roomStore.members.length + 1,
+      date: Date.now()
+    })
+  }, 1000)
+})
+onUnmounted(() => {
+  clearInterval(timer4)
+})
 </script>
 
 <style scoped>
