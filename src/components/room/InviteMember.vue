@@ -94,6 +94,7 @@ const inviteMember = async (member: UserDocument) => {
           name: member.name,
           email: member.email,
         },
+        createdAt: Date.now(),
       }
   )
 }

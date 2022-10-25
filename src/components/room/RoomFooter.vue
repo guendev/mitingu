@@ -289,7 +289,8 @@ const inviteAll = async () => {
             id: member.id,
             name: member.name,
             email: member.email
-          }
+          },
+          createdAt: Date.now()
         }
       )
     })
