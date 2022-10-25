@@ -162,10 +162,11 @@ const meettings = useRTDB(dbRef(getDatabase(), `meettings`))
 
 const talkings = useRTDB(dbRef(getDatabase(), `talkings`))
 
+// danh sách nhưng bạn trong phòng và phòng có hơn 2 người
 const _takings = computed(() =>
-  Object.values(talkings?.value || {}).filter(
-    (t) => t.roomId === route.params.id
-  )
+  Object.values(talkings?.value || {})
+    .filter((t: any) => t.count >= 2 && t.date > Date.now() - 3000)
+    .map((t: any) => t.id)
 )
 
 const _meeting = computed(() =>
@@ -197,12 +198,9 @@ const notInRoom = computed(() =>
         ) !== -1
     )
     // lọc những bạn đang trong phòng học
-    .filter(
-      (member) =>
-        _meeting.value.findIndex(
-          (e: any) => Number(e.id) === Number(member.id)
-        ) === -1
-    )
+    // và phòng đó có tối thiếu 2 ng
+    // => _takings là danh sách
+    .filter((member) => _takings.value.indexOf(member.id) === -1)
 )
 
 let timer: string | number | NodeJS.Timer | undefined
@@ -364,13 +362,26 @@ onMounted(() => {
   timer4 = setInterval(async () => {
     await dbSet(dbRef(getDatabase(), `talkings/${userStore.user?.id}`), {
       id: userStore.user?.id,
-      count: roomStore.members.length + 1,
+      count: agoraStore.mapRemoteUsers.length + 1,
       date: Date.now()
     })
   }, 1000)
 })
 onUnmounted(() => {
   clearInterval(timer4)
+})
+
+let timer5: string | number | NodeJS.Timer | undefined
+onMounted(() => {
+  timer2 = setInterval(async () => {
+    await dbSet(dbRef(getDatabase(), `online/${userStore.user?.id}`), {
+      id: userStore.user?.id,
+      time: Date.now()
+    })
+  }, 1000)
+})
+onUnmounted(() => {
+  clearInterval(timer5)
 })
 </script>
 
