@@ -25,7 +25,7 @@
 
     </div>
 
-    <a-button type='primary' class='ml-auto' size='small' :disabled='!!skipTime || disabled' @click.stop='inviteMember(member)'>
+    <a-button type='primary' class='ml-auto' size='small' :disabled='!!skipTime || disabled' @click.stop='inviteMember()'>
       {{ $t('invite') }}
       <span v-if='skipTime' class='text-xs ml-1'>({{ skipTime }})</span>
     </a-button>
@@ -37,7 +37,7 @@
 import { UserDocument } from '@entities/user'
 import { v4 as uuidv4 } from 'uuid'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   member: UserDocument
   disabled?: boolean
 }>(), {
@@ -50,7 +50,7 @@ const userStore = useUserStore()
 const roomStore = useRoomStore()
 const route = useRoute()
 
-const inviteMember = async (member: UserDocument) => {
+const inviteMember = async (single = true) => {
   skipTime.value = 30
   const timer = setInterval(() => {
     skipTime.value--
@@ -60,7 +60,7 @@ const inviteMember = async (member: UserDocument) => {
   }, 1000)
 
   const uid = uuidv4()
-  await dbSet(dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),{
+  await dbSet(dbRef(getDatabase(), `invites/${props.member.id}/${route.params?.id}/${uid}`),{
     id: uid,
     from: {
       id: userStore.user?.id,
@@ -68,13 +68,14 @@ const inviteMember = async (member: UserDocument) => {
       avatar: userStore.user?.avatar
     },
     to: {
-      id: member.id,
-      name: member.name
+      id: props.member.id,
+      name: props.member.name
     },
     goal: {
       id: route.params?.id,
       name: roomStore.goal?.name
     },
+    single,
     disabled: false,
     createdAt: Date.now()
   })
@@ -90,14 +91,18 @@ const inviteMember = async (member: UserDocument) => {
           email: userStore.user?.email,
         },
         receiver: {
-          id: member.id,
-          name: member.name,
-          email: member.email,
+          id: props.member.id,
+          name: props.member.name,
+          email: props.member.email,
         },
         createdAt: Date.now(),
       }
   )
 }
+
+defineExpose({
+  inviteMember
+})
 </script>
 
 <style scoped>

@@ -6,7 +6,6 @@
 </template>
 
 <script lang="ts" setup>
-import { notification } from 'ant-design-vue'
 const props = defineProps<{
   invite: any
   inviteKey: string
@@ -19,6 +18,12 @@ const okClick = () => {
 
 
 const cancelClick = async () => {
-  notification.close(props.inviteKey)
+  window.dispatchEvent(new CustomEvent('afterClickCancelInvite', {
+    detail: {
+      invite: props.invite,
+      path: props.path
+    }
+  }))
+
 }
 </script>

@@ -37,7 +37,7 @@
         class="overflow-y-auto pt-1 scrollbar-hide"
     >
       <div v-for="member in searchResult" :key="member.id" class="py-2">
-        <invite-member :member="member" :disabled="!!skipTime" />
+        <invite-member ref="invitesRef" :member="member" :disabled="!!skipTime" />
       </div>
     </div>
   </div>
@@ -94,6 +94,7 @@ const notInRoom = computed(() =>
     .filter((member) => _takings.value.indexOf(member.id) === -1)
 )
 
+const invitesRef = ref<any>()
 const inviteAll = async () => {
   skipTime.value = 30
   const timer = setInterval(() => {
@@ -121,54 +122,10 @@ const inviteAll = async () => {
 
   const users = getRandom([], 5)
 
-  await Promise.all(
-    users.map(async (member: any) => {
-      const uid = uuidv4()
-      await dbSet(
-        dbRef(getDatabase(), `invites/${member.id}/${route.params?.id}/${uid}`),
-        {
-          id: uid,
-          from: {
-            id: userStore.user?.id,
-            name: userStore.user?.name,
-            avatar: userStore.user?.avatar
-          },
-          to: {
-            id: member.id,
-            name: member.name
-          },
-          goal: {
-            id: route.params?.id,
-            name: roomStore.goal?.name
-          },
-          disabled: false,
-          createdAt: Date.now()
-        }
-      )
-
-      const [goalId, prefix, random] = (route.params.id as string).split('-')
-
-      await dbSet(
-        dbRef(
-          getDatabase(),
-          `meeting-logs/${goalId}/${prefix}/invites/${random}` + uid
-        ),
-        {
-          sender: {
-            id: userStore.user?.id,
-            name: userStore.user?.name,
-            email: userStore.user?.email
-          },
-          receiver: {
-            id: member.id,
-            name: member.name,
-            email: member.email
-          },
-          createdAt: Date.now()
-        }
-      )
-    })
-  )
+  users.forEach((user: any) => {
+    const index = notInRoom.value.findIndex((_user) => Number(_user.id) === Number(user.id))
+    invitesRef.value?.[index]?.inviteMember(false)
+  })
 }
 
 const searchResult = computed(() => {
