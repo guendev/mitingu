@@ -40,6 +40,7 @@ declare module '@vue/runtime-core' {
     IMdiMicrophoneOff: typeof import('~icons/mdi/microphone-off')['default']
     InviteMember: typeof import('./../src/components/room/InviteMember.vue')['default']
     InviteMemberItem: typeof import('@components/room/InviteMember.vue')['default']
+    InviteTab: typeof import('./../src/components/tabs/InviteTab.vue')['default']
     IPhDotsThreeOutlineVerticalFill: typeof import('~icons/ph/dots-three-outline-vertical-fill')['default']
     IRiUser4Fill: typeof import('~icons/ri/user4-fill')['default']
     ITwemojiFlagForFlagJapan: typeof import('~icons/twemoji/flag-for-flag-japan')['default']

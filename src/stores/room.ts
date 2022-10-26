@@ -5,7 +5,7 @@ import {UserDocument} from "@entities/user";
 interface IRoomStore {
     goal?: GoalDocument
     page: 'confirm' | 'room' | 'kicked'
-    sidebar?: 'users' | 'chat' | 'settings'
+    sidebar?: 'users' | 'chat' | 'settings' | 'invite'
     members: UserDocument[]
     mode: 'flexible' | 'scroll'
 }
@@ -27,7 +27,7 @@ export const useRoomStore = defineStore({
     },
 
     actions: {
-        toogleTab(tab: 'users' | 'chat' | 'settings') {
+        toogleTab(tab: 'users' | 'chat' | 'settings' | 'invite') {
             this.sidebar = tab === this.sidebar ? undefined : tab
         },
 

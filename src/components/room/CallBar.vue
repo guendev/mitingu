@@ -1,24 +1,24 @@
 <template>
   <div class="flex items-center">
-    <a-button type="danger" @click="cancelClick">Huỷ Bỏ</a-button>
-    <a-button type="primary" @click="okClick" class="ml-4">
-      Tham Gia
-    </a-button>
+    <a-button type="danger" @click="cancelClick">Huỷ</a-button>
+    <a-button type="primary" class="ml-4" @click="okClick"> Tham Gia </a-button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { notification } from 'ant-design-vue'
 const props = defineProps<{
-  invite: any,
+  invite: any
   inviteKey: string
+  path: string
 }>()
 
 const okClick = () => {
   window.location.href = '/room/' + props.invite.goal?.id
 }
 
-const cancelClick = () => {
+
+const cancelClick = async () => {
   notification.close(props.inviteKey)
 }
 </script>

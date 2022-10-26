@@ -21,6 +21,7 @@
           <messages-tab v-if="roomStore.sidebar === 'chat' " />
           <members-tab v-else-if="roomStore.sidebar === 'users'" />
           <settings-tab v-else-if="roomStore.sidebar === 'settings'" />
+          <invite-tab v-else />
         </div>
       </div>
 
@@ -29,7 +30,6 @@
 </template>
 
 <script lang="ts" setup>
-import MessagesTab from "@components/tabs/MessagesTab.vue"
 import {useRTDB} from "@vueuse/firebase";
 
 const route = useRoute()
@@ -69,7 +69,7 @@ const checkDisabled = async (chanel = '') => {
         if (docRef.exists()) {
           const invites2 = Object.values(docRef.val())
           await Promise.all([
-            invites2.filter(e => !e.disabled).map(async (invite: any) => {
+            invites2.filter((e: any) => !e.disabled).map(async (invite: any) => {
               await dbSet(dbRef(getDatabase(), `invites/${member.id}/${route.params.id || chanel}/${invite.id}`), {
                 ...invite,
                 disabled: true

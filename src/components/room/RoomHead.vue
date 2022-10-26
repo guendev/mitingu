@@ -3,7 +3,7 @@
     <router-link to="/" class="mr-auto block w-[40px]">
       <img src="/images/logo.svg" alt="logo" class="h-full w-full" />
     </router-link>
-    <button class="mr-7 text-[20px] text-gray-500">
+    <button v-if="false" class="mr-7 text-[20px] text-gray-500">
       <i-bx-video-recording />
     </button>
     <current-user />
@@ -28,22 +28,25 @@ const invite = computed(
 )
 
 const route = useRoute()
-watch(invite, (invite) => {
-  if (invite?.createdAt + 1000 * 30 > Date.now() && invite.goal?.id !== route.params.id) {
-    const key = `open${Date.now()}`;
+watch(invite, (invite: any) => {
+  if (
+    invite?.createdAt + 1000 * 30 > Date.now() &&
+    invite.goal?.id !== route.params.id
+  ) {
+    const key = `open${Date.now()}`
     notification.open({
       message: 'Thông Báo Cuộc Gọi',
-      description: `Do you want to practice ${invite.from?.name} with ${invite.from.name}?`,
+      description: invite.single
+        ? `${invite.from.name} is inviting you to practice ${invite.goal?.name}`
+        : `${invite.from.name} is inviting you to join room to practice ${invite.goal?.name}.`,
       duration: 30,
       key: key,
       btn: () =>
-        h(
-          CallBar,
-          {
-            invite,
-            inviteKey: key,
-          }
-        )
+        h(CallBar, {
+          invite,
+          inviteKey: key,
+          path: `invites/${invite.to.id}/${route.params?.id}/${invite.id}`,
+        })
     })
   }
 })
