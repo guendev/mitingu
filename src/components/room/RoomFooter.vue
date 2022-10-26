@@ -169,7 +169,7 @@ onUnmounted(() => {
 const [goalId, prefix, random] = (route.params.id as string).split('-')
 const logs = useRTDB(dbRef(getDatabase(), `meeting-logs/${goalId}/${prefix}`))
 
-// gi số ng trong phòng
+// gi số ng trong
 let timer4: any
 onMounted(() => {
   timer4 = setInterval(async () => {
