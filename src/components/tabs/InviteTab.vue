@@ -10,9 +10,16 @@
           <span>({{ notInRoom.length }})</span>
         </div>
 
+        <button
+            class="bg-rose-500 text-white text-[18px] p-1 rounded-full transform md:hidden relative ml-auto"
+            @click="roomStore.toogleTab('invite')"
+        >
+          <i-material-symbols-close />
+        </button>
+
         <a-button
           type="primary"
-          class="ml-auto"
+          class="ml-5"
           size="small"
           :disabled="!!skipTime"
           @click.stop="inviteAll"
