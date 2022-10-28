@@ -34,7 +34,7 @@ watch(invite, (invite: any) => {
     notification.open({
       message: 'Thông Báo Cuộc Gọi',
       description: invite.single
-        ? `${invite.from.name} is inviting you to practice ${invite.goal?.name}`
+        ? `${invite.from.name} is inviting you to practice ${invite.goal?.name}.`
         : `${invite.from.name} is inviting you to join room to practice ${invite.goal?.name}.`,
       duration: 30,
       key: key,
