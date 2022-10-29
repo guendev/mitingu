@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="">
     <div>
-      <div class="flex items-center justify-between pb-2">
-        <div class="mr-3 flex items-center">
+      <div class="flex items-center md:flex-row flex-row-reverse justify-between pb-2">
+        <div class="mr-3 items-center hidden md:flex">
           <h4 class="mb-0 text-[17px] font-semibold">
             {{ $t('online') }}
           </h4>
@@ -11,18 +11,18 @@
         </div>
 
         <button
-            class="bg-rose-500 text-white text-[18px] p-1 rounded-full transform md:hidden relative ml-auto"
+            class="bg-gray-100 text-gray-500 text-[18px] p-1 rounded-full transform md:hidden relative ml-auto"
             @click="roomStore.toogleTab('invite')"
         >
           <i-material-symbols-close />
         </button>
 
         <a-button
-          type="primary"
-          class="ml-5"
-          size="small"
-          :disabled="!!skipTime"
-          @click.stop="inviteAll"
+            type="primary"
+            class="md:ml-5"
+            size="small"
+            :disabled="!!skipTime"
+            @click.stop="inviteAll"
         >
           {{ $t('sendRandomInvitation') }}
           <span v-if="skipTime" class="ml-1 text-xs">({{ skipTime }})</span>
@@ -31,11 +31,11 @@
 
       <div>
         <input
-          v-model="keyword"
-          class="w-full rounded-lg bg-gray-100 px-3 py-1.5 focus:bg-white focus:outline-0"
-          type="text"
-          :placeholder="$t('search')"
-          @click.stop
+            v-model="keyword"
+            class="w-full rounded-lg bg-gray-100 px-3 py-1.5 focus:bg-white focus:outline-0"
+            type="text"
+            :placeholder="$t('search')"
+            @click.stop
         />
       </div>
     </div>

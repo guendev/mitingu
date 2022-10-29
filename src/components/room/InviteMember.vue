@@ -9,7 +9,7 @@
     </a>
 
     <div class='ml-2 mr-3'>
-      <h4 class='mb-0'>{{ member.name }}</h4>
+      <h4 class='mb-0'>{{ member.name?.slice(0, 10) }}</h4>
 
       <template
           v-if='["owner", "coach"].includes(member.type)'

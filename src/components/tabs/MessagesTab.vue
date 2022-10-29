@@ -6,7 +6,7 @@
       </h4>
 
       <button
-          class="bg-rose-500 text-white text-[18px] p-1 rounded-full transform bottom-2 md:hidden relative ml-auto"
+          class="bg-gray-100 text-gray-500 text-[18px] p-1 rounded-full transform bottom-2 md:hidden relative ml-auto"
           @click="roomStore.toogleTab('chat')"
       >
         <i-material-symbols-close />
