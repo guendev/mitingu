@@ -41,6 +41,6 @@
         "format": ["camelCase", "PascalCase"]
       }
     ],
-    "vue/no-v-html": "off"
+    "vue/valid-v-html": "off"
   }
 }

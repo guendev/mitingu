@@ -38,6 +38,7 @@ declare module '@vue/runtime-core' {
     IMaterialSymbolsClose: typeof import('~icons/material-symbols/close')['default']
     IMaterialSymbolsVideoChatRounded: typeof import('~icons/material-symbols/video-chat-rounded')['default']
     IMdiMicrophoneOff: typeof import('~icons/mdi/microphone-off')['default']
+    InviteDescription: typeof import('./../src/components/room/InviteDescription.vue')['default']
     InviteMember: typeof import('./../src/components/room/InviteMember.vue')['default']
     InviteMemberItem: typeof import('@components/room/InviteMember.vue')['default']
     InviteTab: typeof import('./../src/components/tabs/InviteTab.vue')['default']

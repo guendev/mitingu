@@ -14,6 +14,8 @@
 import { useRTDB } from '@vueuse/firebase'
 import { notification } from 'ant-design-vue'
 import CallBar from '@components/room/CallBar.vue'
+import InviteDescription from '@components/room/InviteDescription.vue'
+
 
 const userStore = useUserStore()
 
@@ -32,11 +34,14 @@ watch(invite, (invite: any) => {
   const key = `invite-${invite?.id}`
   if (invite && invite?.goal?.id !== route.params.id && !invite?.disabled) {
     notification.open({
-      message: 'Thông Báo Cuộc Gọi',
-      description: invite.single
-        ? `${invite.from.name} is inviting you to practice ${invite.goal?.name}.`
-        : `${invite.from.name} is inviting you to join room to practice ${invite.goal?.name}.`,
+      message: '',
+      description: () => h(InviteDescription, {
+        invite: toRaw(invite)
+      }),
       duration: 30,
+      style: {
+        borderRadius: '10px',
+      },
       key: key,
       btn: () =>
         h(CallBar, {
