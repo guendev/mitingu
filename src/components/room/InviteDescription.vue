@@ -11,10 +11,10 @@
       <b>{{ invite.from.name }}</b>
       {{
         invite.single
-          ? `is inviting you to practice.`
-          : `is inviting you to join room to practice.`
+          ? `is inviting you to practice`
+          : `is inviting you to join room to practice`
       }}
-      <b>{{ invite.goal?.name }}</b>
+      <b>{{ invite.goal?.name }}.</b>
     </div>
   </div>
 </template>

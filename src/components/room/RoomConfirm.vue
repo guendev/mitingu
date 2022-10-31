@@ -98,12 +98,12 @@ const initAgora = async () => {
     video
   }
 
-  const joined = window.localStorage.getItem(
-    ('joined-' + route.params.id) as string
-  )
-  if (joined && Number(joined) > Date.now() - 1000 * 60 * 10) {
+  // const joined = window.localStorage.getItem(
+  //   ('joined-' + route.params.id) as string
+  // )
+  // if (joined && Number(joined) > Date.now() - 1000 * 60 * 10) {
     await joinRoom()
-  }
+  //}
 }
 
 onMounted(async () => {
