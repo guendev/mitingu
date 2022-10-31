@@ -36,7 +36,10 @@ const messages = {
     scroll: 'Cuộn',
     grid: 'Lưới',
 
-    languages: 'Ngôn ngữ'
+    languages: 'Ngôn ngữ',
+
+    inviterOut: ({ named }: { named: (name: string) => string }) =>
+      `<b>${named('name')}</b> vừa rời khỏi phòng!`
   },
   jp: {
     login: 'ログイン',
@@ -73,7 +76,10 @@ const messages = {
     scroll: 'スクロール',
     grid: 'グリッド',
 
-    languages: '言語'
+    languages: '言語',
+
+    inviterOut: ({ named }: { named: (name: string) => string }) =>
+        `<b>${named('name')}</b> は会話ルームを出ました。`
   },
   en: {
     login: 'Log in',
@@ -110,13 +116,16 @@ const messages = {
     scroll: 'Scroll',
     grid: 'Gird',
 
-    languages: 'Languages'
+    languages: 'Languages',
+    inviterOut: ({ named }: { named: (name: string) => string }) =>
+        `Oop! <b>${named('name')}</b> just left the room.`
   }
 }
 
 export const i18n = createI18n({
   fallbackLocale: 'en',
   locale: 'en',
+  legacy: false,
   // something vue-i18n options here ...
   messages
 })

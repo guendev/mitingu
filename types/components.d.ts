@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
     MembersTab: typeof import('./../src/components/tabs/MembersTab.vue')['default']
     MessageItem: typeof import('./../src/components/tabs/MessageItem.vue')['default']
     MessagesTab: typeof import('./../src/components/tabs/MessagesTab.vue')['default']
+    OutMessage: typeof import('./../src/components/room/OutMessage.vue')['default']
     RoomBody: typeof import('./../src/components/room/RoomBody.vue')['default']
     RoomConfirm: typeof import('./../src/components/room/RoomConfirm.vue')['default']
     RoomContent: typeof import('./../src/components/room/RoomContent.vue')['default']
