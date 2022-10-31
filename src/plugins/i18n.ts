@@ -9,7 +9,7 @@ const messages = {
     welcome: 'Tham gia một cuộc hội thoại',
     newRoom: 'Tạo phòng mới',
     enterRoomID: 'Hoặc nhập ID phòng',
-    leaveConfirm: 'Do you want to finish this communication?',
+    leaveConfirm: 'Bạn có chắc muốn rời khỏi cuộc hội thoại phòng?',
 
     class: 'Phòng Học',
     offedCamera: 'Bạn đã tắt camera',
@@ -46,7 +46,7 @@ const messages = {
     welcome: 'ようこそ！',
     newRoom: 'ルームを始める',
     enterRoomID: 'ルームIDを入力',
-    leaveConfirm: 'Do you want to finish this communication?',
+    leaveConfirm: 'この通信を終了しますか?',
 
     class: 'クラス',
     offedCamera: 'カメラがオフ！',
