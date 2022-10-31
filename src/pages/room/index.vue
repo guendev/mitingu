@@ -145,7 +145,7 @@ onMounted(() => {
           return
         }
         const user = result.val()
-        if (user.time < Date.now() - 3000) {
+        if (user.time < Date.now() - 1000) {
           console.log('1234567', 'đã out')
           message.warn(
             h(OutMessage, {
