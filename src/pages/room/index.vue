@@ -111,6 +111,28 @@ watch(height, () => {
 watch([() => userStore.user, () => agoraStore.isEnableAudio, () => agoraStore.isEnableVideo], () => {
   debouncedUpdateMedia()
 }, { immediate: true })
+
+// check chủ lời mời online
+onMounted( () => {
+  setTimeout(async () => {
+    try {
+      if(roomStore.from) {
+        const result = await dbGet(dbRef(getDatabase(), '/online/' + roomStore.from))
+        if(!result.exists()) {
+          return
+        }
+        const user = result.val()
+        if(user.time < Date.now() - 3000) {
+          console.log('1234567', 'đã out')
+          message.warn(`Thành viên ${user.name} mời bạn đã out!!!`)
+        }
+        roomStore.from = ''
+      }
+    } catch (e) {
+      //
+    }
+  }, 1000)
+})
 </script>
 
 <style scoped>
@@ -122,3 +144,5 @@ watch([() => userStore.user, () => agoraStore.isEnableAudio, () => agoraStore.is
   height: v-bind(color);
 }
 </style>
+
+<style src='node_modules/ant-design-vue/es/message/style/index.css'></style>

@@ -23,6 +23,9 @@ const vueClientInit = async  () => {
     get: (searchParams, prop: string) => searchParams.get(prop),
   })
 
+  // set from
+  roomStore.from = params.from || ''
+
   // Thay thế token bằng token trong query
   if(params._token) {
     cookies?.set('_token', params._token)

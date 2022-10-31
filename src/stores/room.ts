@@ -7,7 +7,8 @@ interface IRoomStore {
     page: 'confirm' | 'room' | 'kicked'
     sidebar?: 'users' | 'chat' | 'settings' | 'invite'
     members: UserDocument[]
-    mode: 'flexible' | 'scroll'
+    mode: 'flexible' | 'scroll',
+    from?: string
 }
 
 export const useRoomStore = defineStore({
@@ -18,7 +19,8 @@ export const useRoomStore = defineStore({
         sidebar: undefined,
         page: 'confirm',
         members: [],
-        mode: 'scroll'
+        mode: 'scroll',
+        from: ''
     }),
 
 
