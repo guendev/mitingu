@@ -189,6 +189,7 @@ onMounted(() => {
   timer2 = setInterval(async () => {
     await dbSet(dbRef(getDatabase(), `online/${userStore.user?.id}`), {
       id: userStore.user?.id,
+      name: userStore.user?.name,
       time: Date.now()
     })
   }, 1000)
