@@ -137,6 +137,7 @@ const { t } = useI18n()
 onMounted(() => {
   setTimeout(async () => {
     try {
+      console.log(roomStore.from)
       if (roomStore.from) {
         const result = await dbGet(
           dbRef(getDatabase(), '/online/' + roomStore.from)
@@ -145,6 +146,7 @@ onMounted(() => {
           return
         }
         const user = result.val()
+        console.log(user)
         if (user.time < Date.now() - 1000) {
           console.log('1234567', 'đã out')
           message.warn(
