@@ -1,5 +1,5 @@
 <template>
-  <div id="confirm" class="h-full w-full">
+  <div id="confirm" class="h-full w-full opacity-0">
     <div
       class="mx-auto mt-40 h-full w-full max-w-bootstrap px-4 lg:mt-0 lg:flex lg:px-0"
     >
