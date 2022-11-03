@@ -25,7 +25,7 @@ const invite = computed(
   () =>
     Object.values(invites.value || {})
       .flatMap((invites: any) => Object.values<any>(invites))
-      .filter((e) => e.createdAt + 1000 * 30 >= Date.now())
+      .filter((e) => e.createdAt + 1000 * 20 >= Date.now())
       .sort((a, b) => b.createdAt - a.createdAt)[0]
 )
 
@@ -38,7 +38,7 @@ watch(invite, (invite: any) => {
       description: () => h(InviteDescription, {
         invite: toRaw(invite)
       }),
-      duration: 30,
+      duration: 20,
       style: {
         borderRadius: '10px',
       },

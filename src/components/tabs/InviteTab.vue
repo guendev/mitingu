@@ -103,7 +103,7 @@ const notInRoom = computed(() =>
 
 const invitesRef = ref<any>()
 const inviteAll = async () => {
-  skipTime.value = 30
+  skipTime.value = 20
   const timer = setInterval(() => {
     skipTime.value--
     if (skipTime.value === 0) {
