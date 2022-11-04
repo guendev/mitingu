@@ -65,7 +65,7 @@ const roomStore = useRoomStore()
 const route = useRoute()
 
 const inviteMember = async (single = true) => {
-  skipTime.value = 20
+  skipTime.value = 15
   const timer = setInterval(() => {
     skipTime.value--
     if (skipTime.value === 0) {
