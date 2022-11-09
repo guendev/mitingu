@@ -103,10 +103,10 @@ const notInRoom = computed(() =>
 
 const invitesRef = ref<any>()
 const inviteAll = async () => {
-  skipTime.value = 20
+  skipTime.value = 15
   const timer = setInterval(() => {
     skipTime.value--
-    if (skipTime.value === 0) {
+    if (skipTime.value <= 0) {
       clearInterval(timer)
     }
   }, 1000)
